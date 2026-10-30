@@ -69,3 +69,7 @@
 ## Images everywhere + monogram logo
 - What: image pickers for the logo (step 1), hero (step 6), about photo (step 7) and every card (step 8); photos are shrunk in the browser to max 1200px WebP; no logo means an initials monogram.
 - Why: sites look real with photos, many images still fit in localStorage, and every site has a logo; parts.js only accepts strict image data URLs.
+
+## Design pass on generated sites (impeccable plugin)
+- What: headings use real embedded fonts (Fraunces / DM Sans as base64 via fontdata.js), themed selection, focus ring and link underlines, no meaningless 01/02 numbers, classic cards as ruled columns; WebCraft gets an SVG mark and favicon.
+- Why: system-font headings and boxed cards made every site look generic; the fonts travel inside the one HTML file, so sites still work offline.

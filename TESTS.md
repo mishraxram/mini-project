@@ -49,3 +49,5 @@
 | 45 | Images on steps 1, 6, 7, 8 (logo, hero, about, each card) | Each shows in the step with Remove, and in the site in every layout; no overflow at 1280 / 375px | All shown; 5 layouts no overflow | Pass |
 | 46 | No logo uploaded | Site header shows the initials ("Dosa Corner" -> DC) | "DC" monogram | Pass |
 | 47 | Card image with `" onerror=` in an imported file | Not put in the site | Dropped | Pass |
+| 48 | Generated site fonts (internet off) | Headings use Fraunces or DM Sans from inside the HTML file | document.fonts in the site: DM Sans 400/700 (Night), Fraunces (Classic/Magazine) loaded; no network URLs | Pass |
+| 49 | All 50 templates after the design pass | No overflow at 1280 / 375px; impeccable detector clean | 0 overflow; detector: [] | Pass |

@@ -84,6 +84,21 @@ function footerHTML(state) {
 }
 
 // Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
+// Which embedded font files each family needs (data is in fontdata.js)
+const FONT_FILES = {
+  "Fraunces": [["fraunces-400", 400], ["fraunces-700", 700]],
+  "DM Sans": [["dm-sans-400", 400], ["dm-sans-700", 700]],
+  "JetBrains Mono": [["jetbrains-mono-400", 400]]
+};
+
+// @font-face rules for only the families this theme uses, with the font inside the page as base64
+function fontFaceCSS(theme) {
+  return Object.keys(FONT_FILES).filter(family => (theme.headingFont + theme.bodyFont).includes(family))
+    .flatMap(family => FONT_FILES[family].map(([file, weight]) =>
+      `@font-face { font-family: "${family}"; src: url(data:font/woff2;base64,${FONT_DATA[file]}) format("woff2"); font-weight: ${weight}; font-display: swap; }`))
+    .join("\n");
+}
+
 // Floating WhatsApp button, only when a number was given
 function whatsappHTML(state) {
   const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
@@ -104,12 +119,19 @@ function page(state, theme, css, body) {
 <meta property="og:description" content="${description}">
 <meta name="theme-color" content="${c.bg}">
 <style>
+${fontFaceCSS(theme)}
 :root { --bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent};
   --line: ${c.line}; --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
 * { box-sizing: border-box; margin: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-wrap: anywhere; }
 h1, h2, h3, header strong, aside strong { font-family: var(--head); }
-a { color: var(--accent); }
+h1, h2, h3 { text-wrap: balance; }
+h1 { letter-spacing: -0.02em; }
+p { max-width: 68ch; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+header nav a:hover, aside nav a:hover { color: var(--accent); }
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .btn { display: inline-block; background: var(--accent); color: var(--on-accent); text-decoration: none;
   padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r); }
 .contact { list-style: none; padding: 0; }

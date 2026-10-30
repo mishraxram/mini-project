@@ -4,12 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
-  <link rel="icon" href="data:,">  <!-- no favicon file, so the browser does not ask for one -->
+  <!-- tab icon: the WebCraft mark, written inline so no extra file is needed -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='0.75' y='0.75' width='26.5' height='26.5' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Cpath d='M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Crect x='4' y='12' width='8.5' height='3' fill='%23D94F2B'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
-    <p><strong id="app-name"></strong> <span id="app-tagline"></span></p>
+    <p>
+      <!-- WebCraft mark: a page wireframe with the 7/5 split the builder uses -->
+      <svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="0.75" y="0.75" width="26.5" height="26.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="12" width="8.5" height="3" fill="#D94F2B"/></svg>
+      <strong id="app-name"></strong> <span id="app-tagline"></span>
+    </p>
     <div class="project-tools">
       <button type="button" id="undo-btn" disabled>Undo</button>
       <button type="button" id="redo-btn" disabled>Redo</button>
@@ -37,6 +42,7 @@
     document.getElementById("app-footer").textContent = APP_NAME + ". Works offline.";
   </script>
   <script src="js/themes.js"></script>
+  <script src="js/fontdata.js"></script>
   <script src="js/parts.js"></script>
   <script src="js/layouts.js"></script>
   <script src="js/templates.js"></script>

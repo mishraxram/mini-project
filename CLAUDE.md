@@ -39,6 +39,7 @@ site-builder/
 ├── js/
 │   ├── steps.js        (all 12 steps as data)
 │   ├── themes.js       (10 themes as data)
+│   ├── fontdata.js     (fonts as base64 for generated sites; made by make-fontdata.js)
 │   ├── parts.js        (shared parts of every layout: menu, sections, footer, page wrapper)
 │   ├── layouts.js      (5-7 layout functions)
 │   ├── templates.js    (builds 50+ templates from layouts x themes)
@@ -51,6 +52,7 @@ site-builder/
 │   ├── app.js          (wizard engine, state, undo/redo)
 │   ├── utils.js        (escapeHTML, validation, save/load)
 │   └── lib/            (jszip.min.js, local copy)
+├── make-fontdata.js    (run after changing /fonts: writes js/fontdata.js)
 ├── server.js           (Express publish server, optional)
 ├── sites/              (published sites saved here)
 └── .claude/

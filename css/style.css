@@ -82,6 +82,7 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
   margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
 header p { margin: 0; }
+.mark { vertical-align: -6px; margin-right: 10px; color: var(--ink); }
 #app-name { font-family: var(--serif); font-size: 1.5rem; margin-right: 8px; }
 #app-tagline { font-family: var(--mono); font-size: 0.8125rem; }
 body > footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--ink); font-family: var(--mono); font-size: 0.8125rem; }
