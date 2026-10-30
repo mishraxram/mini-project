@@ -58,6 +58,6 @@ const STEPS = [
       { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 }
     ] },
 
-  { id: "review", title: "Review", help: "Check your answers, then download your site. Publish comes later.",
+  { id: "review", title: "Review", help: "Check your answers, then download or publish your site.",
     type: "review" }
 ];

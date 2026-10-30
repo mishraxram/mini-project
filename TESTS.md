@@ -11,7 +11,7 @@
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
 | 8 | Run in Edge | All steps work | | |
 | 9 | Mobile size (375px) | No horizontal scroll, menu works | | |
-| 10 | Publish with name `../bad` | Server rejects, error shown | | |
+| 10 | Publish with name `../bad` | Server rejects, error shown | 400 "Site name can only use a-z, 0-9 and -"; also `a/b`, `\`, `BAD`, `js`, empty, 41 chars rejected | Pass |
 | 11 | Social link `javascript:alert(1)` | Link dropped from footer | Not in any of 30 templates | Pass |
 | 12 | All 30 templates at 320, 375, 768, 1200px | No horizontal scroll | First run: mustard overflowed at 375px (long mono word). Fixed with overflow-wrap. Re-run: none | Pass |
 | 13 | Step 3, press Next with no template | Error, stays on 03 / 12 | "This field is required.", stayed | Pass |
@@ -32,3 +32,6 @@
 | 28 | Remove a menu item, Undo, then Ctrl+Y outside a text box | Item comes back, then is removed again | Matches | Pass |
 | 29 | Undo, then make a new change | Redo becomes disabled | Disabled | Pass |
 | 30 | Menu and card list inputs | Every input has a name and a screen-reader label, no Chrome form warning | names like f-cards-0-title, 0 unnamed fields, no console issue | Pass |
+| 31 | Publish from http://localhost:3000 | Saved to sites/asha-rao, link opens the site | Link http://localhost:3000/asha-rao/, `<script>` escaped | Pass |
+| 32 | Ask the server for /server.js, /.git/config, /node_modules/..., /%2e%2e/server.js | 404, nothing private served | All 404 | Pass |
+| 33 | Publish with server stopped / builder opened as file | Clear error text, no alert | "The local server is not running..." / "Publish needs the local server..." | Pass |

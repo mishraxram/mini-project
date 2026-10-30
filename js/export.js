@@ -42,6 +42,16 @@ function downloadZIP() {
   return zip.generateAsync({ type: "blob" }).then(blob => saveFile(blob, siteFileName() + ".zip"));
 }
 
+// Publish: send the site to the local server (server.js), which saves it under sites/<name>/.
+// Returns a promise of the server's answer: { url } or { error }.
+function publishSite() {
+  return fetch("/publish", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: siteFileName(), html: buildSite(state) })
+  }).then(response => response.json());
+}
+
 // ---- Project file: save all answers as JSON, open them again later ----
 
 function exportProject() {
@@ -124,10 +134,31 @@ function renderExport() {
       .finally(() => { zipButton.disabled = false; zipButton.textContent = "Download ZIP"; });
   };
 
+  // Publish works only when the builder is opened from the server, not as a file
+  const publishButton = el("button", "", "Publish on this computer");
+  publishButton.type = "button";
+  const result = el("p", "publish-result");
+  publishButton.onclick = () => {
+    error.hidden = true;
+    result.replaceChildren();
+    if (location.protocol === "file:") return showError("Publish needs the local server. Run npm start, then open http://localhost:3000");
+    publishButton.disabled = true;
+    publishSite()
+      .then(answer => {
+        if (answer.error) return showError(answer.error);
+        const link = el("a", "", answer.url);
+        link.href = answer.url;
+        link.target = "_blank";
+        result.append("Published: ", link);
+      })
+      .catch(() => showError("The local server is not running. Start it with npm start."))
+      .finally(() => { publishButton.disabled = false; });
+  };
+
   wrap.append(
-    el("h2", "", "Download"),
-    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online."),
-    htmlButton, zipButton, error
+    el("h2", "", "Download or publish"),
+    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000."),
+    htmlButton, zipButton, publishButton, error, result
   );
   return wrap;
 }
