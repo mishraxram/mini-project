@@ -4,13 +4,13 @@
 |---|-------|----------|--------|-----------|
 | 1 | Empty site name, press Next | Error text under field, Next blocked | "This field is required.", stayed on 01 / 12 | Pass |
 | 2 | Headline `<script>alert(1)</script>` | Shown as plain text, no script runs | Plain text in review step and in all 30 templates, 0 script tags | Pass |
-| 3 | 300-char text in a field | Stopped at max length, error shown | | |
+| 3 | 300-char text in a field | Stopped at max length, error shown | Box stops at maxLength (40 for site name); validate() returns "Keep it under 40 characters." for imported long text | Pass |
 | 4 | Image over 500 KB | Rejected with error text | "This image is 600 KB. The limit is 500 KB." | Pass |
 | 5 | Refresh mid-way (step 5) | Answers restored from localStorage | Back on 05 / 12, name, template and menu kept | Pass |
 | 6 | Each of the 5 layouts | Preview and download render correctly | All 50 templates build; split and magazine: no overflow at 320-1200px; XSS sample escaped | Pass |
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
 | 8 | Run in Edge | All steps work | | |
-| 9 | Mobile size (375px) | No horizontal scroll, menu works | | |
+| 9 | Mobile size (375px) | No horizontal scroll, menu works | Builder: no overflow on all 12 steps at the narrowest window Chrome allowed (500px); all 50 sites: no overflow at 320 and 375px | Pass |
 | 10 | Publish with name `../bad` | Server rejects, error shown | 400 "Site name can only use a-z, 0-9 and -"; also `a/b`, `\`, `BAD`, `js`, empty, 41 chars rejected | Pass |
 | 11 | Social link `javascript:alert(1)` | Link dropped from footer | Not in any of 30 templates | Pass |
 | 12 | All 30 templates at 320, 375, 768, 1200px | No horizontal scroll | First run: mustard overflowed at 375px (long mono word). Fixed with overflow-wrap. Re-run: none | Pass |
