@@ -33,3 +33,7 @@
 ## Undo / Redo
 - What: history.js keeps up to 50 JSON snapshots of state, taken 400ms after a change; Undo/Redo buttons and Ctrl+Z / Ctrl+Y move between them.
 - Why: snapshots are simple to explain and restore through applySaved(), the same safe path as project import.
+
+## Split and Magazine layouts (50 templates)
+- What: two more layouts (split: uneven 7/5 columns; magazine: masthead, huge uppercase headline, numbered sections); shared parts moved to parts.js.
+- Why: 5 layouts x 10 themes = 50 templates as CLAUDE.md asks; parts.js keeps each file under 200 lines.

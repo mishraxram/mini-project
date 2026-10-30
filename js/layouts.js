@@ -1,86 +1,5 @@
-// 3 layouts. Each one is a function (state, theme) => full HTML page as a string.
-// Every user value goes through escapeHTML before it enters the string.
-
-// Only allow http(s) links, so a "javascript:" link can never run.
-function safeUrl(url) {
-  return /^https?:\/\//i.test(url.trim()) ? escapeHTML(url.trim()) : "";
-}
-
-// "About Us" -> "about-us", used for menu anchors
-function slug(text) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
-
-// Heading for the cards section changes with the site type
-const CARD_HEADINGS = { portfolio: "Projects", business: "Services", blog: "Posts",
-  event: "Schedule", restaurant: "Menu", student: "Projects" };
-
-// ---- Parts shared by all layouts. Each layout styles them its own way. ----
-
-function navHTML(state) {
-  return state.menuItems.filter(item => item.trim())
-    .map(item => `<a href="#${slug(item)}">${escapeHTML(item)}</a>`).join("");
-}
-
-function heroHTML(state) {
-  const hasContact = Object.values(state.contact).some(value => value.trim());
-  return `<section id="home" class="hero">
-<h1>${escapeHTML(state.heroTitle || state.siteName)}</h1>
-${state.heroText ? `<p>${escapeHTML(state.heroText)}</p>` : ""}
-${hasContact ? `<a class="btn" href="#contact">Contact</a>` : ""}
-</section>`;
-}
-
-function aboutHTML(state) {
-  return state.about.trim() ? `<section id="about"><h2>About</h2><p>${escapeHTML(state.about)}</p></section>` : "";
-}
-
-function cardsHTML(state) {
-  const cards = state.cards.filter(card => card.title.trim() || card.detail.trim());
-  if (!cards.length) return "";
-  const items = cards.map(card => `<li><h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
-  return `<section id="work"><h2>${CARD_HEADINGS[state.siteType] || "Work"}</h2><ol class="cards">${items}</ol></section>`;
-}
-
-function contactHTML(state) {
-  const c = state.contact;
-  const rows = [];
-  if (c.email) rows.push(`<a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a>`);
-  if (c.phone) rows.push(`<a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a>`);
-  if (c.whatsapp) rows.push(`<a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a>`);
-  if (c.address) rows.push(escapeHTML(c.address));
-  if (!rows.length) return "";
-  return `<section id="contact"><h2>Contact</h2><ul class="contact">${rows.map(row => `<li>${row}</li>`).join("")}</ul></section>`;
-}
-
-function footerHTML(state) {
-  const links = Object.keys(state.social).filter(key => safeUrl(state.social[key]))
-    .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
-  return `<footer><p>${escapeHTML(state.footer || state.siteName)}</p>${links ? `<nav class="social">${links}</nav>` : ""}</footer>`;
-}
-
-// Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
-function page(state, theme, css, body) {
-  const c = theme.colors;
-  return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escapeHTML(state.seo.title || state.siteName || "My site")}</title>
-<meta name="description" content="${escapeHTML(state.seo.description)}">
-<style>
-:root { --bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent};
-  --line: ${c.line}; --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
-* { box-sizing: border-box; margin: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-wrap: anywhere; }
-h1, h2, h3, header strong, aside strong { font-family: var(--head); }
-a { color: var(--accent); }
-.btn { display: inline-block; background: var(--accent); color: var(--on-accent); text-decoration: none;
-  padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r); }
-.contact { list-style: none; padding: 0; }
-${css}
-</style></head>
-<body>${body}</body></html>`;
-}
+// Layouts. Each one is a function (state, theme) => full HTML page as a string.
+// Shared parts (menu, sections, footer, page wrapper) live in parts.js.
 
 // ---- Classic: top bar, big headline, cards in a grid. Large type, roomy. ----
 function classicLayout(state, theme) {
@@ -160,8 +79,78 @@ footer { max-width: 38rem; margin: 0 auto; padding: calc(var(--s) * 2); font-siz
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main></div>${footerHTML(state)}`);
 }
 
+// ---- Split: uneven 7/5 columns. Work on the left, about and contact boxes on the right. ----
+function splitLayout(state, theme) {
+  const css = `
+body { font-size: 1rem; line-height: 1.6; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
+  padding: calc(var(--s) * 1.5) calc(var(--s) * 2); max-width: 72rem; margin: 0 auto; }
+header strong { font-size: 1.125rem; }
+header nav a { margin-left: var(--s); color: var(--text); }
+main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: calc(var(--s) * 3);
+  max-width: 72rem; margin: 0 auto; padding: 0 calc(var(--s) * 2) calc(var(--s) * 3); }
+.hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: calc(var(--s) * 3); align-items: end; padding: calc(var(--s) * 4) 0; border-bottom: 1px solid var(--line); }
+.hero h1 { grid-row: span 2; font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.1; }
+.hero p { color: var(--muted); }
+.hero .btn { justify-self: start; }
+#work { grid-column: 1; grid-row: 2 / span 2; }
+#about, #contact { grid-column: 2; border: 1px solid var(--line); border-radius: min(var(--r), 12px); padding: calc(var(--s) * 1.5); }
+h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-bottom: 2px solid var(--accent); }
+.cards { list-style: none; padding: 0; counter-reset: card; }
+.cards li { counter-increment: card; display: grid; grid-template-columns: 3rem 1fr; padding: var(--s) 0; border-top: 1px solid var(--line); }
+.cards li::before { content: counter(card, decimal-leading-zero); grid-row: span 2; font-family: var(--head); color: var(--accent); }
+.cards h3 { font-size: 1.0625rem; }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s); max-width: 72rem; margin: 0 auto;
+  padding: calc(var(--s) * 2); border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
+.social a { margin-left: var(--s); }
+@media (max-width: 760px) {
+  main, .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero h1 { grid-row: auto; }
+  #work, #about, #contact { grid-column: 1; grid-row: auto; }
+}`;
+  return page(state, theme, css, `<header><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
+<main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
+}
+
+// ---- Magazine: masthead, huge uppercase headline, numbered sections. Biggest type scale. ----
+function magazineLayout(state, theme) {
+  const css = `
+body { font-size: 1.0625rem; line-height: 1.65; }
+header { max-width: 80rem; margin: 0 auto; padding: calc(var(--s) * 2) calc(var(--s) * 2) 0; }
+.mast-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--s);
+  border-top: 8px solid var(--text); border-bottom: 1px solid var(--line); padding: var(--s) 0; }
+header strong { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.15em; }
+header nav a { margin-left: var(--s); color: var(--text); text-decoration: none; text-transform: uppercase;
+  font-size: 0.8125rem; letter-spacing: 0.1em; }
+main { max-width: 80rem; margin: 0 auto; padding: 0 calc(var(--s) * 2); counter-reset: section; }
+.hero { padding: calc(var(--s) * 3) 0 calc(var(--s) * 4); border-bottom: 3px double var(--line); }
+.hero h1 { font-size: clamp(2.75rem, 9vw, 6.5rem); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; max-width: 18ch; }
+.hero p { font-family: var(--head); font-style: italic; font-size: 1.375rem; max-width: 36rem; margin: calc(var(--s) * 1.5) 0; }
+section:not(.hero) { counter-increment: section; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 5fr);
+  gap: calc(var(--s) * 2); padding: calc(var(--s) * 3) 0; border-bottom: 1px solid var(--line); }
+section:not(.hero) h2 { font-size: 1.75rem; line-height: 1.1; }
+section:not(.hero) h2::before { content: counter(section, decimal-leading-zero) " "; color: var(--accent); }
+section:not(.hero) > :not(h2) { grid-column: 2; }
+#about p { column-width: 20rem; column-gap: calc(var(--s) * 2); }
+.cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: calc(var(--s) * 2); }
+.cards li { border-top: 3px solid var(--text); padding-top: var(--s); }
+.cards h3 { font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.02em; }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s); max-width: 80rem; margin: 0 auto;
+  padding: calc(var(--s) * 2); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.social a { margin-left: var(--s); }
+@media (max-width: 760px) {
+  section:not(.hero) { grid-template-columns: minmax(0, 1fr); }
+  section:not(.hero) > :not(h2) { grid-column: 1; }
+}`;
+  return page(state, theme, css, `<header><div class="mast-row"><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></div></header>
+<main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
+}
+
 const LAYOUTS = [
   { id: "classic", name: "Classic", build: classicLayout },
   { id: "sidebar", name: "Sidebar", build: sidebarLayout },
-  { id: "minimal", name: "Minimal", build: minimalLayout }
+  { id: "minimal", name: "Minimal", build: minimalLayout },
+  { id: "split", name: "Split", build: splitLayout },
+  { id: "magazine", name: "Magazine", build: magazineLayout }
 ];

@@ -1,5 +1,5 @@
 // Build every template with a loop: each layout x each theme.
-// 3 layouts x 10 themes = 30 templates. Adding one theme adds 3 templates, no new code.
+// 5 layouts x 10 themes = 50 templates. Adding one theme adds 5 templates, no new code.
 const TEMPLATES = [];
 
 LAYOUTS.forEach(layout => {

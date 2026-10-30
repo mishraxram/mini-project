@@ -39,6 +39,7 @@ site-builder/
 ├── js/
 │   ├── steps.js        (all 12 steps as data)
 │   ├── themes.js       (10 themes as data)
+│   ├── parts.js        (shared parts of every layout: menu, sections, footer, page wrapper)
 │   ├── layouts.js      (5-7 layout functions)
 │   ├── templates.js    (builds 50+ templates from layouts x themes)
 │   ├── gallery.js      (step 3 template gallery: thumbnails, filter, search, random)

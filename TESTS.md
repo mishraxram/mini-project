@@ -7,7 +7,7 @@
 | 3 | 300-char text in a field | Stopped at max length, error shown | | |
 | 4 | Image over 500 KB | Rejected with error text | | |
 | 5 | Refresh mid-way (step 5) | Answers restored from localStorage | Back on 05 / 12, name, template and menu kept | Pass |
-| 6 | Each of the 5 layouts | Preview and download render correctly | | |
+| 6 | Each of the 5 layouts | Preview and download render correctly | All 50 templates build; split and magazine: no overflow at 320-1200px; XSS sample escaped | Pass |
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
 | 8 | Run in Edge | All steps work | | |
 | 9 | Mobile size (375px) | No horizontal scroll, menu works | | |
