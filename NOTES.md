@@ -61,3 +61,7 @@
 ## Smart defaults per site type
 - What: SITE_DEFAULTS in steps.js gives each site type a starting menu (used only if the menu was not edited) and grey example hints for steps 6-8.
 - Why: the user sees what good answers look like for their kind of site, and menu names match the section headings.
+
+## Editorial builder design
+- What: local Fraunces / DM Sans / JetBrains Mono (woff2 in /fonts with their OFL licenses), paper/ink/accent tokens, custom focus ring and selection color, SVG paper grain, mono labels and step numbers, hover/pressed/disabled button states.
+- Why: CLAUDE.md Section 8; small text uses a darker accent (#B8401F) so it passes 4.5:1 contrast.

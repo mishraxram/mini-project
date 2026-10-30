@@ -45,3 +45,4 @@
 | 41 | "Made with" checkbox size | Normal small checkbox | 13px wide (was stretched to full width, CSS fixed) | Pass |
 | 42 | Pick "restaurant" on step 2 | Menu becomes Home, Menu, About, Contact; steps 6-8 show restaurant example hints; hints not in the site | All as expected | Pass |
 | 43 | Change site type after editing the menu by hand | Hand-made menu is kept | Kept ["Start","Food"] | Pass |
+| 44 | Builder fonts with internet off (file://) | Fraunces, DM Sans, JetBrains Mono load from /fonts | document.fonts: Fraunces 700, DM Sans 400, JetBrains Mono 400 loaded; no network font URLs | Pass |
