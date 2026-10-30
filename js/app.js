@@ -108,6 +108,8 @@ function renderList(input, id) {
     keys.forEach((key, k) => {
       const box = el("input");
       if (i === 0 && k === 0) box.id = id;  // so the label points at the first box
+      box.name = id + "-" + i + (key ? "-" + key : "");
+      box.setAttribute("aria-label", input.label + " " + (i + 1) + (key ? " " + key : ""));
       box.value = key ? item[key] : item;
       box.placeholder = key || input.label;
       box.maxLength = input.maxLength;
