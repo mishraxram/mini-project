@@ -33,7 +33,7 @@ function render() {
     el("p", "help", step.help)
   );
 
-  if (step.type === "review") box.append(renderReview(), renderExport());
+  if (step.type === "review") box.append(renderReview(), renderChecks(), renderExport());
   else inputsOf(step).forEach(input => box.append(renderInput(input)));
 
   // buttons

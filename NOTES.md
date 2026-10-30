@@ -53,3 +53,7 @@
 ## Generated site extras
 - What: every site now has og: tags and theme-color, a sticky header, a floating WhatsApp button (when a number is given), smooth scroll (off for reduced motion), and the cards section id follows its heading.
 - Why: better sharing and SEO, contact in one tap, and menu links like "Projects" now land on the right section.
+
+## Accessibility check
+- What: a11y.js reads the finished site with DOMParser on the review step and lists images without alt text, links without text, low contrast (WCAG 4.5:1), a missing headline and a missing description.
+- Why: the user sees problems before downloading; contrast uses the same formula browsers and WCAG use.
