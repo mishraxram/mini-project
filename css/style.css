@@ -35,6 +35,10 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
   .preview { position: static; height: 70vh; }
 }
 
+/* download buttons (step 12) */
+.export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid #1A1A1A; }
+.export h2, .export p { flex-basis: 100%; margin: 0; }
+
 /* template gallery (step 3) */
 #wizard:has(.gallery) { max-width: 1040px; }
 .gallery-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }

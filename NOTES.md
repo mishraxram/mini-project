@@ -21,3 +21,7 @@
 ## Live preview
 - What: preview.js shows buildSite(state) in an iframe beside the wizard, refreshed 200ms after typing stops, at Desktop / Tablet / Mobile width scaled to fit.
 - Why: the user sees every answer on the real site at once; buildSite() also applies step 4 color/font choices and will be reused by Download.
+
+## Download
+- What: export.js saves buildSite(state) as one .html file, or a ZIP (index.html + style.css + README.txt) made with the local jszip copy in js/lib/.
+- Why: works offline with no server; file name comes from the site name; the ZIP has hosting steps but no WebCraft branding.
