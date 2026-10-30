@@ -155,8 +155,18 @@ function renderExport() {
       .finally(() => { publishButton.disabled = false; });
   };
 
+  // Optional credit in the generated footer, off by default
+  const credit = el("label", "option");
+  const creditBox = el("input");
+  creditBox.type = "checkbox";
+  creditBox.name = "made-with";
+  creditBox.checked = state.madeWith;
+  creditBox.onchange = () => { state.madeWith = creditBox.checked; };
+  credit.append(creditBox, " Add 'Made with " + APP_NAME + "' in my footer");
+
   wrap.append(
     el("h2", "", "Download or publish"),
+    credit,
     el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000."),
     htmlButton, zipButton, publishButton, error, result
   );

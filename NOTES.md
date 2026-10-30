@@ -41,3 +41,7 @@
 ## Publish (local server)
 - What: npm start runs server.js (Express, 127.0.0.1:3000); POST /publish saves sites/<name>/index.html, served at localhost:3000/<name>/.
 - Why: shows real hosting on one computer; names allow only a-z 0-9 -, and only the builder's css/js/fonts are served, never server.js or .git.
+
+## "Made with WebCraft" credit
+- What: a checkbox on the review step (state.madeWith, default false) adds "Made with" + APP_NAME to the generated footer.
+- Why: the user's site carries no app branding unless they choose it (CLAUDE.md Section 6).

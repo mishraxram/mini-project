@@ -8,7 +8,8 @@ const state = {
   contact: { email: "", phone: "", whatsapp: "", address: "" },
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
-  seo: { title: "", description: "" }
+  seo: { title: "", description: "" },
+  madeWith: false  // "Made with WebCraft" in the footer, off unless the user ticks it
 };
 const DEFAULT_STATE = JSON.stringify(state);  // empty answers, used before an import
 

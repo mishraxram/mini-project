@@ -35,3 +35,4 @@
 | 31 | Publish from http://localhost:3000 | Saved to sites/asha-rao, link opens the site | Link http://localhost:3000/asha-rao/, `<script>` escaped | Pass |
 | 32 | Ask the server for /server.js, /.git/config, /node_modules/..., /%2e%2e/server.js | 404, nothing private served | All 404 | Pass |
 | 33 | Publish with server stopped / builder opened as file | Clear error text, no alert | "The local server is not running..." / "Publish needs the local server..." | Pass |
+| 34 | "Made with WebCraft" checkbox on review | Off by default; ticking adds it to footer; undo and auto-save work; non-boolean import ignored | Off, footer shows credit when ticked, undo clears, "yes" ignored | Pass |

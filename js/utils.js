@@ -55,8 +55,8 @@ function applySaved(saved) {
         .map(card => ({ title: card.title, detail: card.detail })).slice(0, 6);
     } else if (typeof state[key] === "object" && !Array.isArray(state[key]) && value && typeof value === "object") {
       Object.keys(state[key]).forEach(k => { if (typeof value[k] === "string") state[key][k] = value[k]; });
-    } else if (typeof state[key] === "string" && typeof value === "string") {
-      state[key] = value;
+    } else if (typeof state[key] === typeof value && typeof value !== "object") {
+      state[key] = value;  // plain text, or true/false for madeWith
     }
   });
   return true;

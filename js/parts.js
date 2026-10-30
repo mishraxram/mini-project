@@ -56,7 +56,8 @@ function contactHTML(state) {
 function footerHTML(state) {
   const links = Object.keys(state.social).filter(key => safeUrl(state.social[key]))
     .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
-  return `<footer><p>${escapeHTML(state.footer || state.siteName)}</p>${links ? `<nav class="social">${links}</nav>` : ""}</footer>`;
+  const madeWith = state.madeWith ? `<p>Made with ${escapeHTML(APP_NAME)}</p>` : "";
+  return `<footer><p>${escapeHTML(state.footer || state.siteName)}</p>${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}</footer>`;
 }
 
 // Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
