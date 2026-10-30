@@ -49,3 +49,7 @@
 ## Logo upload
 - What: step 11 has a file picker (upload.js) for PNG/JPG/SVG/WebP up to 500 KB, stored as a base64 data URL in state.logo and shown in every layout's header.
 - Why: works offline and stays inside the single HTML file; parts.js only uses the logo if it matches a strict image data URL pattern.
+
+## Generated site extras
+- What: every site now has og: tags and theme-color, a sticky header, a floating WhatsApp button (when a number is given), smooth scroll (off for reduced motion), and the cards section id follows its heading.
+- Why: better sharing and SEO, contact in one tap, and menu links like "Projects" now land on the right section.

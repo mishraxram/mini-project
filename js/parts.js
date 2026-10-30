@@ -39,7 +39,9 @@ function cardsHTML(state) {
   const cards = state.cards.filter(card => card.title.trim() || card.detail.trim());
   if (!cards.length) return "";
   const items = cards.map(card => `<li><h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
-  return `<section id="work"><h2>${CARD_HEADINGS[state.siteType] || "Work"}</h2><ol class="cards">${items}</ol></section>`;
+  const heading = CARD_HEADINGS[state.siteType] || "Work";
+  // id matches the heading ("projects"), so a menu item with the same name jumps here
+  return `<section id="${slug(heading)}" class="work"><h2>${heading}</h2><ol class="cards">${items}</ol></section>`;
 }
 
 function contactHTML(state) {
@@ -67,13 +69,25 @@ function footerHTML(state) {
 }
 
 // Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
+// Floating WhatsApp button, only when a number was given
+function whatsappHTML(state) {
+  const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
+  return number ? `<a class="wa" href="https://wa.me/${number}">WhatsApp</a>` : "";
+}
+
 function page(state, theme, css, body) {
   const c = theme.colors;
+  const title = escapeHTML(state.seo.title || state.siteName || "My site");
+  const description = escapeHTML(state.seo.description);
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escapeHTML(state.seo.title || state.siteName || "My site")}</title>
-<meta name="description" content="${escapeHTML(state.seo.description)}">
+<title>${title}</title>
+<meta name="description" content="${description}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
+<meta name="theme-color" content="${c.bg}">
 <style>
 :root { --bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent};
   --line: ${c.line}; --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
@@ -85,8 +99,14 @@ a { color: var(--accent); }
   padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r); }
 .contact { list-style: none; padding: 0; }
 .logo { height: 1.5em; width: auto; vertical-align: middle; margin-right: 0.5em; }
+/* header stays on top while scrolling; sections stop below it when a menu link is clicked */
+header { position: sticky; top: 0; z-index: 1; background: var(--bg); }
+section { scroll-margin-top: 5rem; }
+.wa { position: fixed; right: 16px; bottom: 16px; z-index: 2; background: var(--accent); color: var(--on-accent);
+  padding: 10px 16px; border-radius: min(var(--r), 24px); text-decoration: none; font-weight: bold; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 ${css}
 </style></head>
-<body>${body}</body></html>`;
+<body>${body}${whatsappHTML(state)}</body></html>`;
 }
 

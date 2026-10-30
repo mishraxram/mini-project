@@ -39,3 +39,5 @@
 | 35 | Upload a .txt as logo | Rejected with error text | "Use a PNG, JPG, SVG or WebP image." | Pass |
 | 36 | Upload a small PNG logo | Shows in step, in site header with alt text, review says "Image added" | All three | Pass |
 | 37 | SVG logo with a `<script>` inside; imported logo `javascript:` or with `" onerror=` | Script never runs; bad logos not put in the site | Did not run; both dropped | Pass |
+| 38 | Generated site head and extras (all 50 templates) | og:title / og:description / theme-color present; WhatsApp button links wa.me/<digits>; header stays at top on scroll | All 50 pass | Pass |
+| 39 | Every menu link `#...` in all 50 templates (menu Home/About/Projects/Contact) | Each link has a matching section id | 0 broken links (first run: Projects pointed to missing #projects, fixed) | Pass |

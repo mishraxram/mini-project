@@ -94,7 +94,7 @@ main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap:
 .hero h1 { grid-row: span 2; font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.1; }
 .hero p { color: var(--muted); }
 .hero .btn { justify-self: start; }
-#work { grid-column: 1; grid-row: 2 / span 2; }
+.work { grid-column: 1; grid-row: 2 / span 2; }
 #about, #contact { grid-column: 2; border: 1px solid var(--line); border-radius: min(var(--r), 12px); padding: calc(var(--s) * 1.5); }
 h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-bottom: 2px solid var(--accent); }
 .cards { list-style: none; padding: 0; counter-reset: card; }
@@ -107,7 +107,7 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
 @media (max-width: 760px) {
   main, .hero { grid-template-columns: minmax(0, 1fr); }
   .hero h1 { grid-row: auto; }
-  #work, #about, #contact { grid-column: 1; grid-row: auto; }
+  .work, #about, #contact { grid-column: 1; grid-row: auto; }
 }`;
   return page(state, theme, css, `<header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
