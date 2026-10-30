@@ -1,4 +1,29 @@
-// escapeHTML, validation
+// escapeHTML, validation, small helpers
+
+// App name lives only here. APP_KEY prefixes localStorage keys and export file names.
+const APP_NAME = "WebCraft";
+const APP_TAGLINE = "12 steps. One website. No AI.";
+const APP_KEY = "webcraft";
+
+// Read or write a value by path, like "contact.email".
+// state lives in app.js; it exists by the time these run.
+function getValue(path) {
+  return path.split(".").reduce((obj, key) => obj[key], state);
+}
+function setValue(path, value) {
+  const keys = path.split(".");
+  const last = keys.pop();
+  keys.reduce((obj, key) => obj[key], state)[last] = value;
+}
+
+// Small helper to make an element. Text goes in with textContent, so it is never run as HTML.
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
 function escapeHTML(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }

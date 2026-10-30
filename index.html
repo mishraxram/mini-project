@@ -3,12 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Site Builder</title>
+  <title></title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <header><strong id="app-name"></strong> <span id="app-tagline"></span></header>
   <main id="wizard"></main>
+  <footer id="app-footer"></footer>
   <script src="js/utils.js"></script>
+  <script>
+    // Fill the app name from utils.js, so it is written in one place only
+    document.title = APP_NAME + " - " + APP_TAGLINE;
+    document.getElementById("app-name").textContent = APP_NAME;
+    document.getElementById("app-tagline").textContent = APP_TAGLINE;
+    document.getElementById("app-footer").textContent = APP_NAME + ". Works offline.";
+  </script>
   <script src="js/steps.js"></script>
   <script src="js/themes.js"></script>
   <script src="js/layouts.js"></script>

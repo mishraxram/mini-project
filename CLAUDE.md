@@ -1,4 +1,4 @@
-# CLAUDE.md — Website Builder (College Mini Project)
+# CLAUDE.md — WebCraft (College Mini Project)
 
 Read this file fully before every task. These rules are the boss. If a request breaks a rule, say so first.
 
@@ -11,6 +11,12 @@ A website builder that runs in the browser. The user answers 12 steps (MCQ + tex
 - **NO AI. NO API calls. NO internet needed.** Everything is pre-saved code.
 - Works fully offline.
 - Owner: a B.Tech student. Code must be simple enough to explain in viva.
+- App name is WebCraft. Use APP_NAME from utils.js.
+  - Tagline: APP_TAGLINE ("12 steps. One website. No AI."). Never hard-code the name in JS.
+  - localStorage keys start with APP_KEY (example: `webcraft_state`).
+  - Project JSON export file name: `webcraft-project.json`.
+  - server.js console message: "WebCraft running on http://localhost:3000".
+  - package.json name: "webcraft".
 
 ## 2. TECH RULES (strict)
 
@@ -48,7 +54,7 @@ site-builder/
 ## 4. CORE DESIGN (data-driven)
 
 - ONE `state` object holds every answer: siteName, siteType, templateId, themeId, fontStyle, menuItems[], heroTitle, heroText, about, cards[], contact{}, footer, social{}, seo{}.
-- Each step is one object in the `steps` array: `{ id, title, help, type: "mcq" | "text" | "list", options, field, required, maxLength }`.
+- Each step is one object in the `steps` array: `{ id, title, help, type: "mcq" | "text" | "list" | "review", options, field, required, maxLength }`.
 - One engine in `app.js` renders every step. Never hard-code a step page.
 - A theme = object of colors + fonts + radius + spacing + shadow.
 - A layout = function `(state, theme) => htmlString`.
@@ -88,6 +94,7 @@ Every step: Back, Next, Skip (if optional), progress shown as "03 / 12" in mono 
 - Generated site extras: responsive menu, sticky header, dark mode toggle, FAQ accordion, WhatsApp / mailto button, SEO + OG tags
 - Keyboard: Enter = Next, Esc = close gallery
 - Image upload to base64 (max 500 KB)
+- Review step: optional checkbox "Add 'Made with WebCraft' in my footer" (default OFF). Generated sites never carry the WebCraft name otherwise.
 
 ## 7. SECURITY AND VALIDATION (never skip)
 
@@ -155,7 +162,7 @@ Optional plugin: run `/plugin` inside Claude Code and look for a front-end desig
 - Do not add a new layout before the first 5 fully work.
 - Do not polish UI before the flow works.
 - Do not leave `console.log` or dead code.
-- Do not write more than ~150 lines in one file without asking.
+- Do not write more than about 200 lines in one file without asking.
 
 ## 14. DEFINITION OF DONE
 

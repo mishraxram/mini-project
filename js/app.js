@@ -14,24 +14,6 @@ const state = {
 let current = 0;  // index of the step on screen
 let errors = {};  // field path -> error message
 
-// Read or write a value by path, like "contact.email"
-function getValue(path) {
-  return path.split(".").reduce((obj, key) => obj[key], state);
-}
-function setValue(path, value) {
-  const keys = path.split(".");
-  const last = keys.pop();
-  keys.reduce((obj, key) => obj[key], state)[last] = value;
-}
-
-// Small helper to make an element. Text goes in with textContent, so it is never run as HTML.
-function el(tag, className, text) {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
-  return node;
-}
-
 // A step has one input (the step itself) or several (step.fields)
 function inputsOf(step) {
   return step.fields || [step];
