@@ -43,3 +43,5 @@
 | 39 | Every menu link `#...` in all 50 templates (menu Home/About/Projects/Contact) | Each link has a matching section id | 0 broken links (first run: Projects pointed to missing #projects, fixed) | Pass |
 | 40 | Review step accessibility check | Clean site: "No problems found."; empty description and low-contrast colors are listed | Clean: no problems; empty description listed; test theme flagged 4 contrast issues; all 10 real themes pass | Pass |
 | 41 | "Made with" checkbox size | Normal small checkbox | 13px wide (was stretched to full width, CSS fixed) | Pass |
+| 42 | Pick "restaurant" on step 2 | Menu becomes Home, Menu, About, Contact; steps 6-8 show restaurant example hints; hints not in the site | All as expected | Pass |
+| 43 | Change site type after editing the menu by hand | Hand-made menu is kept | Kept ["Start","Food"] | Pass |

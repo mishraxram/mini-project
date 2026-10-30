@@ -91,6 +91,7 @@ function renderInput(input) {
     box.id = id;
     box.value = getValue(input.field);
     box.maxLength = input.maxLength;
+    box.placeholder = typeHint(input.field);
     box.oninput = () => setValue(input.field, box.value);
     wrap.append(box);
   }
@@ -115,7 +116,7 @@ function renderList(input, id) {
       box.name = id + "-" + i + (key ? "-" + key : "");
       box.setAttribute("aria-label", input.label + " " + (i + 1) + (key ? " " + key : ""));
       box.value = key ? item[key] : item;
-      box.placeholder = key || input.label;
+      box.placeholder = typeHint(input.field + "." + key) || key || input.label;
       box.maxLength = input.maxLength;
       box.oninput = () => { if (key) item[key] = box.value; else items[i] = box.value; };
       row.append(box);
@@ -154,6 +155,7 @@ function goNext() {
     const error = validate(input, getValue(input.field));
     if (error) errors[input.field] = error;
   });
+  if (Object.keys(errors).length === 0 && STEPS[current].id === "type") applyTypeDefaults();
   if (Object.keys(errors).length === 0 && current < STEPS.length - 1) current++;
   render();
 }

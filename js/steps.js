@@ -62,3 +62,40 @@ const STEPS = [
   { id: "review", title: "Review", help: "Check your answers, then download or publish your site.",
     type: "review" }
 ];
+
+// Smart defaults per site type: a starting menu, and example text shown as grey hints.
+// Hints are placeholders only; they never go into the site unless the user types them.
+const SITE_DEFAULTS = {
+  portfolio: { menu: ["Home", "Projects", "About", "Contact"], heroTitle: "I design and build websites people enjoy",
+    heroText: "One line: what you do and for whom.", about: "Who you are, what you are good at, what work you want.",
+    "cards.title": "Project name", "cards.detail": "One line: what it is and your part in it" },
+  business: { menu: ["Home", "Services", "About", "Contact"], heroTitle: "Fresh bread every morning in Pune",
+    heroText: "Open 7am to 9pm. Order on WhatsApp.", about: "When you started, what you sell, why people come back.",
+    "cards.title": "Service name", "cards.detail": "One line: what the customer gets" },
+  blog: { menu: ["Home", "Posts", "About", "Contact"], heroTitle: "Notes on code and college life",
+    heroText: "A new post every week.", about: "Who writes here and what about.",
+    "cards.title": "Post title", "cards.detail": "One line summary of the post" },
+  event: { menu: ["Home", "Schedule", "About", "Contact"], heroTitle: "TechFest 2026, 14-15 March",
+    heroText: "Two days of talks, workshops and a hackathon.", about: "What happens, who it is for, how to join.",
+    "cards.title": "Session name and time", "cards.detail": "One line: who speaks and what about" },
+  restaurant: { menu: ["Home", "Menu", "About", "Contact"], heroTitle: "South Indian food, made fresh",
+    heroText: "Open daily 11am to 11pm.", about: "Your story, your kitchen, what to try first.",
+    "cards.title": "Dish name and price", "cards.detail": "One line: what is in it" },
+  student: { menu: ["Home", "Projects", "About", "Contact"], heroTitle: "B.Tech CSE student, building for the web",
+    heroText: "Looking for an internship in web development.", about: "Your college, your skills, what you are learning now.",
+    "cards.title": "Project name", "cards.detail": "One line: what you built and with what" }
+};
+
+// Example text for a field, for the chosen site type ("" if none)
+function typeHint(field) {
+  return (SITE_DEFAULTS[state.siteType] || {})[field] || "";
+}
+
+// After step 2: use the menu that fits the site type, unless the user already changed the menu
+function applyTypeDefaults() {
+  const defaults = SITE_DEFAULTS[state.siteType];
+  const menuNow = JSON.stringify(state.menuItems);
+  const untouched = menuNow === JSON.stringify(["Home", "About", "Contact"]) ||
+    Object.values(SITE_DEFAULTS).some(d => JSON.stringify(d.menu) === menuNow);
+  if (defaults && untouched) state.menuItems = defaults.menu.slice();
+}

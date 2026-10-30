@@ -57,3 +57,7 @@
 ## Accessibility check
 - What: a11y.js reads the finished site with DOMParser on the review step and lists images without alt text, links without text, low contrast (WCAG 4.5:1), a missing headline and a missing description.
 - Why: the user sees problems before downloading; contrast uses the same formula browsers and WCAG use.
+
+## Smart defaults per site type
+- What: SITE_DEFAULTS in steps.js gives each site type a starting menu (used only if the menu was not edited) and grey example hints for steps 6-8.
+- Why: the user sees what good answers look like for their kind of site, and menu names match the section headings.
