@@ -19,7 +19,7 @@ LAYOUTS.forEach(layout => {
 function buildSite(state) {
   const template = TEMPLATES.find(t => t.id === state.templateId) || TEMPLATES[0];
   const layout = LAYOUTS.find(l => l.id === template.layoutId);
-  const colors = THEMES.find(t => t.id === (state.themeId || template.themeId));
+  const colors = THEMES.find(t => t.id === state.themeId) || THEMES.find(t => t.id === template.themeId);
   const theme = Object.assign({}, colors, FONT_STYLES[state.fontStyle]);
   return layout.build(state, theme);
 }

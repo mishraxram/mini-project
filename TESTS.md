@@ -6,7 +6,7 @@
 | 2 | Headline `<script>alert(1)</script>` | Shown as plain text, no script runs | Plain text in review step and in all 30 templates, 0 script tags | Pass |
 | 3 | 300-char text in a field | Stopped at max length, error shown | | |
 | 4 | Image over 500 KB | Rejected with error text | | |
-| 5 | Refresh mid-way (step 6) | Answers restored from localStorage | | |
+| 5 | Refresh mid-way (step 5) | Answers restored from localStorage | Back on 05 / 12, name, template and menu kept | Pass |
 | 6 | Each of the 5 layouts | Preview and download render correctly | | |
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
 | 8 | Run in Edge | All steps work | | |
@@ -24,3 +24,7 @@
 | 20 | Download HTML, name `Asha <Rao>` | File `asha-rao.html`, opens offline, no script tags | asha-rao.html, 0 script tags, 1 style block | Pass |
 | 21 | Download ZIP | index.html + style.css + README.txt, index links style.css | All 3 files, link present, no WebCraft name | Pass |
 | 22 | About text `</style><style>body{display:none}` | Shown as text, page still visible | Escaped, only one real style block | Pass |
+| 23 | Save project file, then Open it | webcraft-project.json; opening goes to review with all answers | Name and template restored, step 12 | Pass |
+| 24 | Open a non-JSON file / JSON from another app | Error text under header, answers unchanged | "This is not a valid project file." / "This file is not a WebCraft project." | Pass |
+| 25 | Open a hand-edited file (wrong types, unknown keys, `__proto__`, bad themeId) | Bad fields skipped, no crash | Skipped, no pollution, preview still builds | Pass |
+| 26 | Start over: one click, then two clicks | One click only asks; two clicks clear everything | Back to 01 / 12, empty answers | Pass |

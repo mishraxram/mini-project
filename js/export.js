@@ -42,6 +42,65 @@ function downloadZIP() {
   return zip.generateAsync({ type: "blob" }).then(blob => saveFile(blob, siteFileName() + ".zip"));
 }
 
+// ---- Project file: save all answers as JSON, open them again later ----
+
+function exportProject() {
+  const data = { app: APP_KEY, version: 1, state: state };
+  saveFile(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }), APP_KEY + "-project.json");
+}
+
+// Read a project file. done(message) gets "" on success, or the error text to show.
+function importProject(file, done) {
+  if (!file) return done("");
+  if (file.size > 1000000) return done("This file is too big to be a project (max 1 MB).");
+  file.text().then(text => {
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      return done("This is not a valid project file.");
+    }
+    if (!data || data.app !== APP_KEY || !data.state) return done("This file is not a " + APP_NAME + " project.");
+    applySaved(JSON.parse(DEFAULT_STATE));  // clear old answers first, so nothing mixes in
+    applySaved(data.state);
+    done("");
+  });
+}
+
+// Header buttons: Save project file, Open project file, Start over
+function setupProjectTools() {
+  const error = document.getElementById("project-error");
+  const fileInput = document.getElementById("import-file");
+  document.getElementById("export-btn").onclick = exportProject;
+  document.getElementById("import-btn").onclick = () => fileInput.click();
+  fileInput.onchange = () => {
+    importProject(fileInput.files[0], message => {
+      error.textContent = message;
+      error.hidden = !message;
+      fileInput.value = "";  // so the same file can be picked again
+      if (!message) {
+        current = STEPS.length - 1;  // show the review step with everything loaded
+        errors = {};
+        render();
+      }
+    });
+  };
+
+  // Start over needs two clicks, so one slip does not delete everything
+  const reset = document.getElementById("reset-btn");
+  let armed = false;
+  reset.onclick = () => {
+    if (armed) {
+      clearSave();
+      location.reload();
+      return;
+    }
+    armed = true;
+    reset.textContent = "Click again to clear all answers";
+    setTimeout(() => { armed = false; reset.textContent = "Start over"; }, 3000);
+  };
+}
+
 // Download buttons for the review step, with an error line under them
 function renderExport() {
   const wrap = el("div", "export");

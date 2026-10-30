@@ -43,7 +43,7 @@ site-builder/
 │   ├── templates.js    (builds 50+ templates from layouts x themes)
 │   ├── gallery.js      (step 3 template gallery: thumbnails, filter, search, random)
 │   ├── preview.js      (live preview iframe, desktop / tablet / mobile)
-│   ├── export.js       (Download HTML and ZIP on the review step)
+│   ├── export.js       (Download HTML / ZIP, project JSON save / open, start over)
 │   ├── app.js          (wizard engine, state, undo/redo)
 │   ├── utils.js        (escapeHTML, validation, save/load)
 │   └── lib/            (jszip.min.js, local copy)

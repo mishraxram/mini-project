@@ -35,6 +35,12 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
   .preview { position: static; height: 70vh; }
 }
 
+/* header: app name and project file buttons */
+header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 16px; }
+header p { margin: 0; }
+header .error { flex-basis: 100%; }
+.project-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+
 /* download buttons (step 12) */
 .export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid #1A1A1A; }
 .export h2, .export p { flex-basis: 100%; margin: 0; }

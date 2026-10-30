@@ -25,3 +25,7 @@
 ## Download
 - What: export.js saves buildSite(state) as one .html file, or a ZIP (index.html + style.css + README.txt) made with the local jszip copy in js/lib/.
 - Why: works offline with no server; file name comes from the site name; the ZIP has hosting steps but no WebCraft branding.
+
+## Auto-save and project file
+- What: every change is saved to localStorage (webcraft_state); Save/Open project file writes and reads webcraft-project.json; Start over clears it after two clicks.
+- Why: a refresh never loses work; applySaved() only copies known fields with the right type, so a hand-edited file cannot break the app.

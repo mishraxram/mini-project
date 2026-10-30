@@ -10,6 +10,7 @@ const state = {
   social: { instagram: "", linkedin: "", github: "" },
   seo: { title: "", description: "" }
 };
+const DEFAULT_STATE = JSON.stringify(state);  // empty answers, used before an import
 
 let current = 0;  // index of the step on screen
 let errors = {};  // field path -> error message
@@ -53,6 +54,7 @@ function render() {
   const first = box.querySelector("input, textarea");
   if (first) first.focus();
   schedulePreview();
+  saveState();
 }
 
 // One field: label, the control, and the error text under it
@@ -171,5 +173,11 @@ document.addEventListener("keydown", e => {
   goNext();
 });
 
+// Auto-save after every typed letter or pick (render() saves after button clicks)
+document.getElementById("wizard").addEventListener("input", saveState);
+document.getElementById("wizard").addEventListener("change", saveState);
+
+loadState();
 setupPreview();
+setupProjectTools();
 render();
