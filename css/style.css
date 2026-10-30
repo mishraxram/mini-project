@@ -41,6 +41,11 @@ header p { margin: 0; }
 header .error { flex-basis: 100%; }
 .project-tools { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* logo upload (step 11) */
+.upload { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.upload-preview { max-height: 64px; max-width: 200px; border: 1px solid #1A1A1A; background: #FFFFFF; }
+.upload .error { flex-basis: 100%; }
+
 /* download buttons (step 12) */
 .export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid #1A1A1A; }
 .export h2, .export p { flex-basis: 100%; margin: 0; }

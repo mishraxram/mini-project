@@ -45,3 +45,7 @@
 ## "Made with WebCraft" credit
 - What: a checkbox on the review step (state.madeWith, default false) adds "Made with" + APP_NAME to the generated footer.
 - Why: the user's site carries no app branding unless they choose it (CLAUDE.md Section 6).
+
+## Logo upload
+- What: step 11 has a file picker (upload.js) for PNG/JPG/SVG/WebP up to 500 KB, stored as a base64 data URL in state.logo and shown in every layout's header.
+- Why: works offline and stays inside the single HTML file; parts.js only uses the logo if it matches a strict image data URL pattern.

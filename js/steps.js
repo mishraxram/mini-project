@@ -51,11 +51,12 @@ const STEPS = [
       { type: "text", field: "social.github", label: "GitHub link", maxLength: 100 }
     ] },
 
-  // logo upload comes later with the image feature
-  { id: "seo", title: "Search engine info", help: "Shown in Google results and the browser tab.",
+  // image: true draws a file picker instead of a text box (see upload.js)
+  { id: "seo", title: "Search info and logo", help: "Title and description show in Google results and the browser tab.",
     fields: [
       { type: "text", field: "seo.title", label: "Page title", maxLength: 60 },
-      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 }
+      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 },
+      { type: "text", field: "logo", label: "Logo image (PNG, JPG, SVG or WebP, max 500 KB)", image: true }
     ] },
 
   { id: "review", title: "Review", help: "Check your answers, then download or publish your site.",

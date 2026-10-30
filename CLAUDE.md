@@ -43,6 +43,7 @@ site-builder/
 │   ├── layouts.js      (5-7 layout functions)
 │   ├── templates.js    (builds 50+ templates from layouts x themes)
 │   ├── gallery.js      (step 3 template gallery: thumbnails, filter, search, random)
+│   ├── upload.js       (step 11 logo upload: png/jpg/svg/webp, max 500 KB, base64)
 │   ├── preview.js      (live preview iframe, desktop / tablet / mobile)
 │   ├── export.js       (Download HTML / ZIP, project JSON save / open, start over)
 │   ├── history.js      (undo / redo snapshots, Ctrl+Z / Ctrl+Y)

@@ -53,6 +53,12 @@ function contactHTML(state) {
   return `<section id="contact"><h2>Contact</h2><ul class="contact">${rows.map(row => `<li>${row}</li>`).join("")}</ul></section>`;
 }
 
+// Logo: only a real base64 image data URL is used. An imported project file could hold anything else.
+function logoHTML(state) {
+  const isImage = /^data:image\/(png|jpeg|svg\+xml|webp);base64,[A-Za-z0-9+/=]+$/.test(state.logo);
+  return isImage ? `<img class="logo" src="${state.logo}" alt="${escapeHTML(state.siteName)} logo">` : "";
+}
+
 function footerHTML(state) {
   const links = Object.keys(state.social).filter(key => safeUrl(state.social[key]))
     .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
@@ -78,6 +84,7 @@ a { color: var(--accent); }
 .btn { display: inline-block; background: var(--accent); color: var(--on-accent); text-decoration: none;
   padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r); }
 .contact { list-style: none; padding: 0; }
+.logo { height: 1.5em; width: auto; vertical-align: middle; margin-right: 0.5em; }
 ${css}
 </style></head>
 <body>${body}</body></html>`;

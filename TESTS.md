@@ -5,7 +5,7 @@
 | 1 | Empty site name, press Next | Error text under field, Next blocked | "This field is required.", stayed on 01 / 12 | Pass |
 | 2 | Headline `<script>alert(1)</script>` | Shown as plain text, no script runs | Plain text in review step and in all 30 templates, 0 script tags | Pass |
 | 3 | 300-char text in a field | Stopped at max length, error shown | | |
-| 4 | Image over 500 KB | Rejected with error text | | |
+| 4 | Image over 500 KB | Rejected with error text | "This image is 600 KB. The limit is 500 KB." | Pass |
 | 5 | Refresh mid-way (step 5) | Answers restored from localStorage | Back on 05 / 12, name, template and menu kept | Pass |
 | 6 | Each of the 5 layouts | Preview and download render correctly | All 50 templates build; split and magazine: no overflow at 320-1200px; XSS sample escaped | Pass |
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
@@ -36,3 +36,6 @@
 | 32 | Ask the server for /server.js, /.git/config, /node_modules/..., /%2e%2e/server.js | 404, nothing private served | All 404 | Pass |
 | 33 | Publish with server stopped / builder opened as file | Clear error text, no alert | "The local server is not running..." / "Publish needs the local server..." | Pass |
 | 34 | "Made with WebCraft" checkbox on review | Off by default; ticking adds it to footer; undo and auto-save work; non-boolean import ignored | Off, footer shows credit when ticked, undo clears, "yes" ignored | Pass |
+| 35 | Upload a .txt as logo | Rejected with error text | "Use a PNG, JPG, SVG or WebP image." | Pass |
+| 36 | Upload a small PNG logo | Shows in step, in site header with alt text, review says "Image added" | All three | Pass |
+| 37 | SVG logo with a `<script>` inside; imported logo `javascript:` or with `" onerror=` | Script never runs; bad logos not put in the site | Did not run; both dropped | Pass |

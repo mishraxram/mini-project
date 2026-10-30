@@ -9,6 +9,7 @@ const state = {
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
   seo: { title: "", description: "" },
+  logo: "",  // uploaded image as a base64 data URL
   madeWith: false  // "Made with WebCraft" in the footer, off unless the user ticks it
 };
 const DEFAULT_STATE = JSON.stringify(state);  // empty answers, used before an import
@@ -67,7 +68,9 @@ function renderInput(input) {
   label.htmlFor = id;
   wrap.append(label);
 
-  if (input.gallery) {
+  if (input.image) {
+    wrap.append(renderImageInput(input, id));
+  } else if (input.gallery) {
     wrap.append(renderGallery(input, id));
   } else if (input.type === "mcq") {
     input.options.forEach((option, i) => {
@@ -136,6 +139,7 @@ function renderReview() {
   STEPS.filter(step => step.type !== "review").forEach(step => {
     inputsOf(step).forEach(input => {
       let value = getValue(input.field);
+      if (input.image && value) value = "Image added";  // not the long base64 text
       if (Array.isArray(value)) value = value.map(v => typeof v === "object" ? v.title + " - " + v.detail : v).join(", ");
       list.append(el("dt", "", input.label), el("dd", "", value || "(empty)"));
     });

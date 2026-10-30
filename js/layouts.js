@@ -23,7 +23,7 @@ h2 { font-size: 1.75rem; margin-bottom: calc(var(--s) * 1.5); }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
   padding: calc(var(--s) * 2); border-top: 1px solid var(--line); color: var(--muted); }
 .social a { margin-left: var(--s); }`;
-  return page(state, theme, css, `<header><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
+  return page(state, theme, css, `<header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
@@ -52,7 +52,7 @@ footer { grid-column: 1 / -1; padding: var(--s) calc(var(--s) * 2); border-top: 
   aside { border-right: 0; border-bottom: 1px solid var(--line); }
   .cards li { grid-template-columns: 1fr; }
 }`;
-  return page(state, theme, css, `<aside><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></aside>
+  return page(state, theme, css, `<aside><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></aside>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
@@ -75,7 +75,7 @@ h2 { font-family: var(--body); font-size: 0.75rem; text-transform: uppercase; le
 .cards h3 { font-size: 1.125rem; font-weight: normal; font-style: italic; }
 footer { max-width: 38rem; margin: 0 auto; padding: calc(var(--s) * 2); font-size: 0.875rem; color: var(--muted); }
 .social a { margin-right: var(--s); }`;
-  return page(state, theme, css, `<div class="wrap"><header><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
+  return page(state, theme, css, `<div class="wrap"><header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main></div>${footerHTML(state)}`);
 }
 
@@ -109,7 +109,7 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
   .hero h1 { grid-row: auto; }
   #work, #about, #contact { grid-column: 1; grid-row: auto; }
 }`;
-  return page(state, theme, css, `<header><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
+  return page(state, theme, css, `<header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
@@ -143,7 +143,7 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
   section:not(.hero) { grid-template-columns: minmax(0, 1fr); }
   section:not(.hero) > :not(h2) { grid-column: 1; }
 }`;
-  return page(state, theme, css, `<header><div class="mast-row"><strong>${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></div></header>
+  return page(state, theme, css, `<header><div class="mast-row"><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></div></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
