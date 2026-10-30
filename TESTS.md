@@ -28,3 +28,6 @@
 | 24 | Open a non-JSON file / JSON from another app | Error text under header, answers unchanged | "This is not a valid project file." / "This file is not a WebCraft project." | Pass |
 | 25 | Open a hand-edited file (wrong types, unknown keys, `__proto__`, bad themeId) | Bad fields skipped, no crash | Skipped, no pollution, preview still builds | Pass |
 | 26 | Start over: one click, then two clicks | One click only asks; two clicks clear everything | Back to 01 / 12, empty answers | Pass |
+| 27 | Type "Asha", pause, type " Rao", Undo twice, Redo | "Asha", then empty, then "Asha" | Matches; Undo disabled at start | Pass |
+| 28 | Remove a menu item, Undo, then Ctrl+Y outside a text box | Item comes back, then is removed again | Matches | Pass |
+| 29 | Undo, then make a new change | Redo becomes disabled | Disabled | Pass |

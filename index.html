@@ -10,6 +10,8 @@
   <header>
     <p><strong id="app-name"></strong> <span id="app-tagline"></span></p>
     <div class="project-tools">
+      <button type="button" id="undo-btn" disabled>Undo</button>
+      <button type="button" id="redo-btn" disabled>Redo</button>
       <button type="button" id="export-btn">Save project file</button>
       <button type="button" id="import-btn">Open project file</button>
       <input type="file" id="import-file" accept=".json,application/json" hidden>
@@ -41,6 +43,7 @@
   <script src="js/preview.js"></script>
   <script src="js/lib/jszip.min.js"></script>
   <script src="js/export.js"></script>
+  <script src="js/history.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

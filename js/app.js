@@ -55,6 +55,7 @@ function render() {
   if (first) first.focus();
   schedulePreview();
   saveState();
+  scheduleRecord();
 }
 
 // One field: label, the control, and the error text under it
@@ -176,8 +177,11 @@ document.addEventListener("keydown", e => {
 // Auto-save after every typed letter or pick (render() saves after button clicks)
 document.getElementById("wizard").addEventListener("input", saveState);
 document.getElementById("wizard").addEventListener("change", saveState);
+document.getElementById("wizard").addEventListener("input", scheduleRecord);
+document.getElementById("wizard").addEventListener("change", scheduleRecord);
 
 loadState();
+setupHistory();
 setupPreview();
 setupProjectTools();
 render();
