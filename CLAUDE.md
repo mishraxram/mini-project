@@ -41,6 +41,7 @@ site-builder/
 │   ├── themes.js       (10 themes as data)
 │   ├── layouts.js      (5-7 layout functions)
 │   ├── templates.js    (builds 50+ templates from layouts x themes)
+│   ├── gallery.js      (step 3 template gallery: thumbnails, filter, search, random)
 │   ├── app.js          (wizard engine, state, undo/redo)
 │   ├── utils.js        (escapeHTML, validation, save/load)
 │   └── lib/            (jszip.min.js, local copy)

@@ -62,7 +62,9 @@ function renderInput(input) {
   label.htmlFor = id;
   wrap.append(label);
 
-  if (input.type === "mcq") {
+  if (input.gallery) {
+    wrap.append(renderGallery(input, id));
+  } else if (input.type === "mcq") {
     input.options.forEach((option, i) => {
       const radio = el("input");
       radio.type = "radio";

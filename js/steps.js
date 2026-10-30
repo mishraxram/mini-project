@@ -9,10 +9,10 @@ const STEPS = [
     type: "mcq", field: "siteType", label: "Site type", required: true,
     options: ["portfolio", "business", "blog", "event", "restaurant", "student"] },
 
-  // placeholder until the template gallery is built
-  { id: "template", title: "Pick a template", help: "Placeholder list. The gallery comes later.",
-    type: "mcq", field: "templateId", label: "Template", required: true,
-    options: ["template-a", "template-b", "template-c"] },
+  // gallery: true draws thumbnails instead of plain radio buttons (see gallery.js)
+  { id: "template", title: "Pick a template", help: "Filter by layout or search by theme name. You can change colors in the next step.",
+    type: "mcq", field: "templateId", label: "Template", required: true, gallery: true,
+    options: TEMPLATES.map(template => template.id) },
 
   { id: "theme", title: "Colors and font", help: "Optional. Leave as is to keep the template look.",
     fields: [

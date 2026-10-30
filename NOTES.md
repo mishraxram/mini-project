@@ -13,3 +13,7 @@
 ## WebCraft name
 - What: APP_NAME, APP_TAGLINE, APP_KEY live only in utils.js; index.html fills title, header, footer from them.
 - Why: rename in one place; generated sites do not carry the WebCraft name by default.
+
+## Template gallery (step 3)
+- What: gallery.js shows all templates as live, scaled-down, sandboxed iframe thumbnails with a layout filter, search and a Random button.
+- Why: the user sees the real site before picking; filters only hide tiles, so thumbnails are built once per step view.
