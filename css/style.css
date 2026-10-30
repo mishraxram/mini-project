@@ -1,0 +1,19 @@
+/* wizard styles - plain for now, final design comes later */
+body { margin: 0; padding: 32px 16px; font-family: sans-serif; background: #F5F1E8; color: #1A1A1A; }
+#wizard { max-width: 640px; }
+.progress { font-family: monospace; }
+.help { margin-top: 0; }
+.field { margin-bottom: 16px; }
+.field > label { display: block; margin-bottom: 4px; font-weight: bold; }
+.option { display: block; }
+input:not([type="radio"]), textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #1A1A1A; font: inherit; }
+textarea { min-height: 96px; }
+.list-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.has-error input, .has-error textarea { border-color: #D94F2B; }
+.error { color: #D94F2B; margin: 4px 0 0; }
+.nav { display: flex; gap: 8px; margin-top: 32px; }
+button { padding: 8px 16px; border: 1px solid #1A1A1A; background: transparent; font: inherit; cursor: pointer; }
+button.primary { background: #1A1A1A; color: #F5F1E8; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.review dt { font-weight: bold; margin-top: 8px; }
+.review dd { margin: 0; }
