@@ -9,7 +9,7 @@ const state = {
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
   seo: { title: "", description: "" },
-  logo: "",  // uploaded image as a base64 data URL
+  logo: "", heroImage: "", aboutImage: "",  // uploaded images as base64 data URLs
   madeWith: false  // "Made with WebCraft" in the footer, off unless the user ticks it
 };
 const DEFAULT_STATE = JSON.stringify(state);  // empty answers, used before an import
@@ -123,13 +123,14 @@ function renderList(input, id) {
     });
     const remove = el("button", "", "Remove");
     remove.onclick = () => { items.splice(i, 1); render(); };
+    if (input.itemImage) row.append(imagePicker(id + "-img-" + i, "Image for card " + (i + 1), () => item.image || "", url => { item.image = url; }, MAX_SIDE));
     row.append(remove);
     list.append(row);
   });
 
   const add = el("button", "", "Add " + input.label.toLowerCase());
   add.disabled = items.length >= input.maxItems;
-  add.onclick = () => { items.push(input.itemFields ? { title: "", detail: "" } : ""); render(); };
+  add.onclick = () => { items.push(input.itemFields ? { title: "", detail: "", image: "" } : ""); render(); };
   list.append(add);
   return list;
 }

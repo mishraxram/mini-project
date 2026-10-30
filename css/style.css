@@ -41,7 +41,11 @@ input:not([type="radio"]):not([type="checkbox"]):hover, textarea:hover { backgro
 input:focus-visible, textarea:focus-visible { outline-offset: 0; }
 input[type="radio"], input[type="checkbox"] { accent-color: var(--ink); }
 textarea { min-height: 96px; resize: vertical; }
-.list-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.list-row { display: flex; align-items: start; gap: 8px; margin-bottom: 8px; }
+/* card rows with an image: title and detail on top, image picker and Remove below */
+.list-row:has(.upload) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; border: 1px solid var(--ink); }
+.list-row:has(.upload) .upload { grid-column: 1 / -1; }
+.list-row:has(.upload) > button { justify-self: start; }
 .has-error input, .has-error textarea { border: 2px solid var(--accent); }
 .error { margin: 4px 0 0; color: var(--accent-text); font-size: 0.875rem; }
 

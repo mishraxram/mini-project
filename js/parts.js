@@ -15,6 +15,16 @@ function slug(text) {
 const CARD_HEADINGS = { portfolio: "Projects", business: "Services", blog: "Posts",
   event: "Schedule", restaurant: "Menu", student: "Projects" };
 
+// Only a real base64 image data URL is used. An imported project file could hold anything else.
+function safeImage(src) {
+  return typeof src === "string" && /^data:image\/(png|jpeg|svg\+xml|webp);base64,[A-Za-z0-9+/=]+$/.test(src) ? src : "";
+}
+
+// <img> for an uploaded image, or "" when there is none
+function imgHTML(src, alt, className) {
+  return safeImage(src) ? `<img class="${className}" src="${src}" alt="${escapeHTML(alt)}">` : "";
+}
+
 // ---- Parts shared by all layouts. Each layout styles them its own way. ----
 
 function navHTML(state) {
@@ -28,17 +38,21 @@ function heroHTML(state) {
 <h1>${escapeHTML(state.heroTitle || state.siteName)}</h1>
 ${state.heroText ? `<p>${escapeHTML(state.heroText)}</p>` : ""}
 ${hasContact ? `<a class="btn" href="#contact">Contact</a>` : ""}
+${imgHTML(state.heroImage, state.heroTitle || state.siteName, "hero-img")}
 </section>`;
 }
 
 function aboutHTML(state) {
-  return state.about.trim() ? `<section id="about"><h2>About</h2><p>${escapeHTML(state.about)}</p></section>` : "";
+  const photo = imgHTML(state.aboutImage, "About " + state.siteName, "about-img");
+  if (!state.about.trim() && !photo) return "";
+  return `<section id="about"><h2>About</h2>${photo}<p>${escapeHTML(state.about)}</p></section>`;
 }
 
 function cardsHTML(state) {
-  const cards = state.cards.filter(card => card.title.trim() || card.detail.trim());
+  const cards = state.cards.filter(card => card.title.trim() || card.detail.trim() || safeImage(card.image));
   if (!cards.length) return "";
-  const items = cards.map(card => `<li><h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
+  const items = cards.map(card =>
+    `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
   const heading = CARD_HEADINGS[state.siteType] || "Work";
   // id matches the heading ("projects"), so a menu item with the same name jumps here
   return `<section id="${slug(heading)}" class="work"><h2>${heading}</h2><ol class="cards">${items}</ol></section>`;
@@ -55,10 +69,11 @@ function contactHTML(state) {
   return `<section id="contact"><h2>Contact</h2><ul class="contact">${rows.map(row => `<li>${row}</li>`).join("")}</ul></section>`;
 }
 
-// Logo: only a real base64 image data URL is used. An imported project file could hold anything else.
+// Logo: the uploaded one, or a small square with the site's initials ("Dosa Corner" -> "DC")
 function logoHTML(state) {
-  const isImage = /^data:image\/(png|jpeg|svg\+xml|webp);base64,[A-Za-z0-9+/=]+$/.test(state.logo);
-  return isImage ? `<img class="logo" src="${state.logo}" alt="${escapeHTML(state.siteName)} logo">` : "";
+  if (safeImage(state.logo)) return imgHTML(state.logo, state.siteName + " logo", "logo");
+  const initials = state.siteName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
+  return initials ? `<span class="logo monogram" aria-hidden="true">${escapeHTML(initials)}</span>` : "";
 }
 
 function footerHTML(state) {
@@ -99,6 +114,13 @@ a { color: var(--accent); }
   padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r); }
 .contact { list-style: none; padding: 0; }
 .logo { height: 1.5em; width: auto; vertical-align: middle; margin-right: 0.5em; }
+.monogram { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; background: var(--accent); color: var(--on-accent);
+  font-family: var(--head); font-size: 0.85em; font-weight: bold; letter-spacing: 0; border-radius: min(var(--r), 8px); }
+/* uploaded images: cropped to a fixed shape so every site looks tidy */
+.hero-img, .about-img, .card-img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: min(var(--r), 12px); }
+.hero-img { aspect-ratio: 16 / 9; margin-top: calc(var(--s) * 2); }
+.about-img { aspect-ratio: 4 / 3; max-width: 28rem; margin-bottom: var(--s); }
+.card-img { aspect-ratio: 4 / 3; margin-bottom: var(--s); }
 /* header stays on top while scrolling; sections stop below it when a menu link is clicked */
 header { position: sticky; top: 0; z-index: 1; background: var(--bg); }
 section { scroll-margin-top: 5rem; }

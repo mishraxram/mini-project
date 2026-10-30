@@ -65,3 +65,7 @@
 ## Editorial builder design
 - What: local Fraunces / DM Sans / JetBrains Mono (woff2 in /fonts with their OFL licenses), paper/ink/accent tokens, custom focus ring and selection color, SVG paper grain, mono labels and step numbers, hover/pressed/disabled button states.
 - Why: CLAUDE.md Section 8; small text uses a darker accent (#B8401F) so it passes 4.5:1 contrast.
+
+## Images everywhere + monogram logo
+- What: image pickers for the logo (step 1), hero (step 6), about photo (step 7) and every card (step 8); photos are shrunk in the browser to max 1200px WebP; no logo means an initials monogram.
+- Why: sites look real with photos, many images still fit in localStorage, and every site has a logo; parts.js only accepts strict image data URLs.

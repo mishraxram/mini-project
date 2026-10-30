@@ -5,7 +5,7 @@
 | 1 | Empty site name, press Next | Error text under field, Next blocked | "This field is required.", stayed on 01 / 12 | Pass |
 | 2 | Headline `<script>alert(1)</script>` | Shown as plain text, no script runs | Plain text in review step and in all 30 templates, 0 script tags | Pass |
 | 3 | 300-char text in a field | Stopped at max length, error shown | Box stops at maxLength (40 for site name); validate() returns "Keep it under 40 characters." for imported long text | Pass |
-| 4 | Image over 500 KB | Rejected with error text | "This image is 600 KB. The limit is 500 KB." | Pass |
+| 4 | Image over 500 KB | Photo is shrunk to max 1200px WebP and saved under 500 KB; files over 5 MB (photos) or 500 KB (SVG) are rejected with error text | 4000x3000 photo saved as 13 KB WebP; 6 MB file: "This image is 6144 KB. The limit is 5120 KB." | Pass |
 | 5 | Refresh mid-way (step 5) | Answers restored from localStorage | Back on 05 / 12, name, template and menu kept | Pass |
 | 6 | Each of the 5 layouts | Preview and download render correctly | All 50 templates build; split and magazine: no overflow at 320-1200px; XSS sample escaped | Pass |
 | 7 | Run in Chrome | All steps work | Went 01 to 12, no console errors | Pass |
@@ -46,3 +46,6 @@
 | 42 | Pick "restaurant" on step 2 | Menu becomes Home, Menu, About, Contact; steps 6-8 show restaurant example hints; hints not in the site | All as expected | Pass |
 | 43 | Change site type after editing the menu by hand | Hand-made menu is kept | Kept ["Start","Food"] | Pass |
 | 44 | Builder fonts with internet off (file://) | Fraunces, DM Sans, JetBrains Mono load from /fonts | document.fonts: Fraunces 700, DM Sans 400, JetBrains Mono 400 loaded; no network font URLs | Pass |
+| 45 | Images on steps 1, 6, 7, 8 (logo, hero, about, each card) | Each shows in the step with Remove, and in the site in every layout; no overflow at 1280 / 375px | All shown; 5 layouts no overflow | Pass |
+| 46 | No logo uploaded | Site header shows the initials ("Dosa Corner" -> DC) | "DC" monogram | Pass |
+| 47 | Card image with `" onerror=` in an imported file | Not put in the site | Dropped | Pass |

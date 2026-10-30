@@ -11,6 +11,12 @@
         ],
         "createdAt": "2026-10-30T16:50:07.893Z",
         "reason": "project spec: CLAUDE.md Section 8 mandates paper background #F5F1E8 for the editorial direction"
+      },
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-10-30T17:35:37.199Z",
+        "reason": "project spec: CLAUDE.md Section 8 names Fraunces as the heading font"
       }
     ]
   }

@@ -2,8 +2,12 @@
 // A step with one input uses "field". A step with several inputs lists them in "fields".
 // "field" is a path into state, like "contact.email".
 const STEPS = [
-  { id: "name", title: "Site name", help: "Shown in the header and browser tab.",
-    type: "text", field: "siteName", label: "Site name", required: true, maxLength: 40 },
+  // image: true draws a file picker instead of a text box (see upload.js)
+  { id: "name", title: "Site name and logo", help: "Shown in the header and browser tab. No logo? Your initials are used.",
+    fields: [
+      { type: "text", field: "siteName", label: "Site name", required: true, maxLength: 40 },
+      { type: "text", field: "logo", label: "Logo (optional)", image: true, maxSide: 400 }
+    ] },
 
   { id: "type", title: "Site type", help: "Pick what the site is for.",
     type: "mcq", field: "siteType", label: "Site type", required: true,
@@ -26,14 +30,18 @@ const STEPS = [
   { id: "hero", title: "Headline", help: "The first thing visitors read.",
     fields: [
       { type: "text", field: "heroTitle", label: "Headline", required: true, maxLength: 80 },
-      { type: "text", field: "heroText", label: "Subtext", maxLength: 200 }
+      { type: "text", field: "heroText", label: "Subtext", maxLength: 200 },
+      { type: "text", field: "heroImage", label: "Main image (optional)", image: true }
     ] },
 
-  { id: "about", title: "About", help: "A short paragraph about you or the business.",
-    type: "text", field: "about", label: "About text", multiline: true, maxLength: 600 },
+  { id: "about", title: "About", help: "A short paragraph about you or the business, and a photo if you like.",
+    fields: [
+      { type: "text", field: "about", label: "About text", multiline: true, maxLength: 600 },
+      { type: "text", field: "aboutImage", label: "About photo (optional)", image: true }
+    ] },
 
-  { id: "cards", title: "Services or projects", help: "Up to 6 cards. Each has a title and a detail.",
-    type: "list", field: "cards", label: "Card", maxItems: 6, maxLength: 120, itemFields: ["title", "detail"] },
+  { id: "cards", title: "Services or projects", help: "Up to 6 cards. Each has a title, a detail and an optional image.",
+    type: "list", field: "cards", label: "Card", maxItems: 6, maxLength: 120, itemFields: ["title", "detail"], itemImage: true },
 
   { id: "contact", title: "Contact details", help: "Fill only what you want to show.",
     fields: [
@@ -51,12 +59,10 @@ const STEPS = [
       { type: "text", field: "social.github", label: "GitHub link", maxLength: 100 }
     ] },
 
-  // image: true draws a file picker instead of a text box (see upload.js)
-  { id: "seo", title: "Search info and logo", help: "Title and description show in Google results and the browser tab.",
+  { id: "seo", title: "Search engine info", help: "Title and description show in Google results and the browser tab.",
     fields: [
       { type: "text", field: "seo.title", label: "Page title", maxLength: 60 },
-      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 },
-      { type: "text", field: "logo", label: "Logo image (PNG, JPG, SVG or WebP, max 500 KB)", image: true }
+      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 }
     ] },
 
   { id: "review", title: "Review", help: "Check your answers, then download or publish your site.",

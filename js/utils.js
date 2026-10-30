@@ -24,7 +24,10 @@ function saveState() {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify({ state: state, step: current }));
   } catch (e) {
-    // the app still works, it just will not remember answers after a refresh
+    // storage full (many big images) or blocked: the app still works, but tell the user
+    const error = document.getElementById("project-error");
+    error.textContent = "Auto-save is full, so a refresh would lose your newest changes. Use Save project file.";
+    error.hidden = false;
   }
 }
 
@@ -52,7 +55,7 @@ function applySaved(saved) {
       state.menuItems = value.filter(item => typeof item === "string").slice(0, 6);
     } else if (key === "cards" && Array.isArray(value)) {
       state.cards = value.filter(card => card && typeof card.title === "string" && typeof card.detail === "string")
-        .map(card => ({ title: card.title, detail: card.detail })).slice(0, 6);
+        .map(card => ({ title: card.title, detail: card.detail, image: typeof card.image === "string" ? card.image : "" })).slice(0, 6);
     } else if (typeof state[key] === "object" && !Array.isArray(state[key]) && value && typeof value === "object") {
       Object.keys(state[key]).forEach(k => { if (typeof value[k] === "string") state[key][k] = value[k]; });
     } else if (typeof state[key] === typeof value && typeof value !== "object") {
@@ -78,7 +81,7 @@ function escapeHTML(s) {
 function validate(step, value) {
   // list: check the item count, then check every text inside it
   if (Array.isArray(value)) {
-    const texts = value.flatMap(item => typeof item === "object" ? Object.values(item) : [item]);
+    const texts = value.flatMap(item => typeof item === "object" ? [item.title, item.detail] : [item]);
     if (step.required && !texts.some(t => t.trim())) return "Add at least one item.";
     if (step.maxItems && value.length > step.maxItems) return "You can add up to " + step.maxItems + " items.";
     for (const t of texts) {
