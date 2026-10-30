@@ -52,6 +52,7 @@ function render() {
 
   const first = box.querySelector("input, textarea");
   if (first) first.focus();
+  schedulePreview();
 }
 
 // One field: label, the control, and the error text under it
@@ -170,4 +171,5 @@ document.addEventListener("keydown", e => {
   goNext();
 });
 
+setupPreview();
 render();

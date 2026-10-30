@@ -8,6 +8,13 @@ const HUMANIST = '"Trebuchet MS", "Segoe UI", sans-serif';
 const VERDANA = 'Verdana, Geneva, sans-serif';
 const MONO = '"Courier New", Courier, monospace';
 
+// Step 4 "Font style" replaces the theme's fonts with one of these
+const FONT_STYLES = {
+  serif: { headingFont: SERIF, bodyFont: SERIF },
+  sans: { headingFont: SANS, bodyFont: SANS },
+  mono: { headingFont: MONO, bodyFont: SANS }
+};
+
 const THEMES = [
   { id: "paper", name: "Paper", headingFont: SERIF, bodyFont: SANS, radius: 0, spacing: 16,
     colors: { bg: "#F5F1E8", text: "#1A1A1A", muted: "#5C574F", accent: "#B8401F", onAccent: "#FFFFFF", line: "#1A1A1A" } },

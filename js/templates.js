@@ -13,3 +13,13 @@ LAYOUTS.forEach(layout => {
     });
   });
 });
+
+// The final site: the picked template, with the step 4 color and font choices on top.
+// Used by the live preview, and later by Download and Publish.
+function buildSite(state) {
+  const template = TEMPLATES.find(t => t.id === state.templateId) || TEMPLATES[0];
+  const layout = LAYOUTS.find(l => l.id === template.layoutId);
+  const colors = THEMES.find(t => t.id === (state.themeId || template.themeId));
+  const theme = Object.assign({}, colors, FONT_STYLES[state.fontStyle]);
+  return layout.build(state, theme);
+}

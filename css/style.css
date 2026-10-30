@@ -18,6 +18,23 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 .review dt { font-weight: bold; margin-top: 8px; }
 .review dd { margin: 0; }
 
+/* builder: wizard left (7), live preview right (5) */
+/* minmax(0, ...) stops the 1280px preview frame from stretching its column */
+.builder { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; align-items: start; }
+.preview { position: sticky; top: 16px; display: flex; flex-direction: column; height: calc(100vh - 96px); }
+.preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.preview-label { font-family: monospace; }
+#preview-devices { display: flex; gap: 4px; }
+#preview-stage { flex: 1; overflow: hidden; border: 1px solid #1A1A1A; background: #FFFFFF; }
+#preview-frame { display: block; border: 0; transform-origin: 0 0; }
+/* the gallery already shows previews, so it gets the full width */
+.builder:has(.gallery) { grid-template-columns: minmax(0, 1fr); }
+.builder:has(.gallery) .preview { display: none; }
+@media (max-width: 900px) {
+  .builder { grid-template-columns: minmax(0, 1fr); }
+  .preview { position: static; height: 70vh; }
+}
+
 /* template gallery (step 3) */
 #wizard:has(.gallery) { max-width: 1040px; }
 .gallery-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }

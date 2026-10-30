@@ -8,7 +8,13 @@
 </head>
 <body>
   <header><strong id="app-name"></strong> <span id="app-tagline"></span></header>
-  <main id="wizard"></main>
+  <div class="builder">
+    <main id="wizard"></main>
+    <aside class="preview" aria-label="Live preview">
+      <div class="preview-bar"><span class="preview-label">Preview</span><div id="preview-devices"></div></div>
+      <div id="preview-stage"><iframe id="preview-frame" title="Live preview of your site" sandbox="allow-same-origin"></iframe></div>
+    </aside>
+  </div>
   <footer id="app-footer"></footer>
   <script src="js/utils.js"></script>
   <script>
@@ -23,6 +29,7 @@
   <script src="js/templates.js"></script>
   <script src="js/steps.js"></script>
   <script src="js/gallery.js"></script>
+  <script src="js/preview.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

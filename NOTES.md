@@ -17,3 +17,7 @@
 ## Template gallery (step 3)
 - What: gallery.js shows all templates as live, scaled-down, sandboxed iframe thumbnails with a layout filter, search and a Random button.
 - Why: the user sees the real site before picking; filters only hide tiles, so thumbnails are built once per step view.
+
+## Live preview
+- What: preview.js shows buildSite(state) in an iframe beside the wizard, refreshed 200ms after typing stops, at Desktop / Tablet / Mobile width scaled to fit.
+- Why: the user sees every answer on the real site at once; buildSite() also applies step 4 color/font choices and will be reused by Download.
