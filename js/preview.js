@@ -20,7 +20,9 @@ function updatePreview() {
   const html = buildSite(state);
   if (html === lastPreview) return;  // nothing changed, keep the scroll position
   lastPreview = html;
-  document.getElementById("preview-frame").srcdoc = html;
+  // The preview reloads after every typed letter, so it is shown without the entry animations
+  document.getElementById("preview-frame").srcdoc = html.replace("</head>",
+    "<style>.hero > *, .reveal { animation: none; opacity: 1; transform: none; transition: none; }</style></head>");
 }
 
 // Draw the page at the real device width, then shrink it to fit the panel
