@@ -5,7 +5,8 @@
 const SITE_CSS = `
 * { box-sizing: border-box; margin: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-wrap: anywhere;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  padding-bottom: 72px; }  /* room under the footer, so the fixed mode and WhatsApp buttons never cover text */
 h1, h2, h3, header strong, aside strong { font-family: var(--head); }
 h1, h2, h3 { text-wrap: balance; }
 h1 { letter-spacing: -0.02em; }
@@ -53,6 +54,26 @@ section { scroll-margin-top: 5rem; }
 .wa { position: fixed; right: 16px; bottom: 16px; z-index: 2; background: var(--accent); color: var(--on-accent);
   padding: 10px 16px; border-radius: min(var(--r), 24px); text-decoration: none; font-weight: bold; }
 
+/* hero art: the site's initials, huge and outlined. Hidden unless a layout turns it on. */
+.hero .hero-art { display: none; margin: 0; max-width: none; font-family: var(--head); font-weight: bold; line-height: 0.8;
+  letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--accent); user-select: none; }
+
+/* moving strip of card titles under the hero */
+.strip { overflow: hidden; border-block: 1px solid var(--line); padding: calc(var(--s) * 0.75) 0; grid-column: 1 / -1; }
+.strip-track { display: flex; width: max-content; font-family: var(--head); font-size: clamp(1.25rem, 3vw, 2rem); white-space: nowrap; }
+.strip-track span { padding-right: 1.5em; }
+.strip-track span::after { content: "/"; padding-left: 1.5em; color: var(--accent); }
+.strip:hover .strip-track { animation-play-state: paused; }
+
+/* contact: one big closing line before the details */
+#contact .cta { max-width: 18ch; margin-bottom: calc(var(--s) * 1.5); font-family: var(--head); font-weight: bold;
+  font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--text); }
+
+/* footer: the site name across the full width, sized to the footer (cqi = 1% of its width) */
+footer { container-type: inline-size; }
+footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom: var(--s); font-family: var(--head); font-weight: bold;
+  font-size: min(13cqi, 9rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: none; color: var(--text); }
+
 /* motion only for visitors who have not asked for less of it */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
@@ -62,7 +83,9 @@ section { scroll-margin-top: 5rem; }
   .hero > :nth-child(n+4) { animation-delay: 0.24s; }
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
   .reveal.in { opacity: 1; transform: none; }
+  .strip-track { animation: slide 40s linear infinite; }
 }
+@keyframes slide { to { transform: translateX(-50%); } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } }
 
 /* small screens: the menu hides behind a "Menu" button (the button is added by MENU_SCRIPT) */

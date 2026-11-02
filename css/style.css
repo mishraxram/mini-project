@@ -169,6 +169,15 @@ input[type="file"]:hover::file-selector-button { background: var(--ink); color: 
 
 body > footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--ink); font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
 
+/* new step: content slides in a little, one block after another */
+@media (prefers-reduced-motion: no-preference) {
+  .turn > * { animation: turn-in 0.35s ease-out both; }
+  .turn > :nth-child(2) { animation-delay: 0.04s; }
+  .turn > :nth-child(3) { animation-delay: 0.08s; }
+  .turn > :nth-child(n+4) { animation-delay: 0.12s; }
+}
+@keyframes turn-in { from { opacity: 0; transform: translateY(8px); } }
+
 /* narrower screens: drop the step index first, then stack the form above the proof */
 @media (max-width: 1200px) {
   .builder { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }

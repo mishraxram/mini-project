@@ -101,3 +101,7 @@
 ## Proof desk redesign (builder)
 - What: three columns (step index, form, proof); a big outlined step number; answers typed in large serif on a ruled line; file tools as quiet mono links under a thick ink masthead; the preview has an ink bar with the file name and device width.
 - Why: the old screen was a plain form next to a box, the same as most builders; now it reads like filling in a printed form and checking a proof, and finished steps can be reopened from the index.
+
+## Signature details (generated sites)
+- What: big outlined initials in the Classic hero when there is no photo, a slowly moving strip of card titles under every hero, a large closing line in Contact by site type ("Book a table or order in."), and the site name as a giant wordmark across the footer (sized with container units so it never overflows). The builder slides each new step in.
+- Why: every site now has something to remember it by, using only the user's own name and card titles, so nothing needs an image or the internet.

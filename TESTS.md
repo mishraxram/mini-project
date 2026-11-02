@@ -67,3 +67,8 @@
 | 63 | Proof desk layout at 1440 / 1366 / 390px | No sideways scroll; step index shows above 1200px, hidden below | overflow 0 at all three; index visible at 1440 and 1366 | Pass |
 | 64 | Click "03 Pick a template" in the step index from step 7 | Jumps back to step 3; later steps cannot be clicked | Now 03 / 12, 0 forward buttons | Pass |
 | 65 | Proof bar | Shows file name and device width | "dosa-corner.html", "Desktop / 1280 px" | Pass |
+| 66 | All 50 templates at 375 / 768 / 1280px after the signature pass | No overflow; headline always below the label; a11y check clean | 0 failures (sidebar overflow at 375 found and fixed with min-width 0) | Pass |
+| 67 | Classic with no hero image | Site initials drawn large and outlined beside the headline; hidden on phones | "DC" shown at 1440, hidden under 760px | Pass |
+| 68 | 3 card titles | Moving strip under the hero, pauses on hover, still when reduced motion is on | 6 spans (list written twice for a seamless loop) | Pass |
+| 69 | Fixed Dark mode button at the bottom of the page | Never covers footer text | 72px space under the footer | Pass |
+| 70 | Split layout with the label | Headline stays in the left column | Fixed (label now spans both columns) | Pass |

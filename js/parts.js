@@ -15,6 +15,10 @@ function slug(text) {
 const CARD_HEADINGS = { portfolio: "Projects", business: "Services", blog: "Posts",
   event: "Schedule", restaurant: "Menu", student: "Projects" };
 
+// Big closing line in the contact section, by site type (fixed text, no user input)
+const CTAS = { portfolio: "Have a project in mind?", business: "Let's work together.", blog: "Say hello.",
+  event: "Questions about the event?", restaurant: "Book a table or order in.", student: "Open to internships and projects." };
+
 // Small label above the headline, also chosen by site type (fixed text, no user input)
 const KICKERS = { portfolio: "Selected work", business: "Open for business", blog: "Journal", event: "Save the date",
   restaurant: "Kitchen and dining", student: "Student portfolio" };
@@ -44,7 +48,18 @@ function heroHTML(state) {
 ${state.heroText ? `<p>${escapeHTML(state.heroText)}</p>` : ""}
 ${hasContact ? `<a class="btn" href="#contact">Get in touch ${ARROW_SVG}</a>` : ""}
 ${imgHTML(state.heroImage, state.heroTitle || state.siteName, "hero-img")}
-</section>`;
+${!safeImage(state.heroImage) && initialsOf(state) ? `<p class="hero-art" aria-hidden="true">${escapeHTML(initialsOf(state))}</p>` : ""}
+</section>${stripHTML(state)}`;
+}
+
+// A slowly moving line of the card titles under the hero (needs 2 or more).
+// aria-hidden: the same titles are listed again in the cards section.
+function stripHTML(state) {
+  const titles = state.cards.map(card => card.title.trim()).filter(Boolean);
+  if (titles.length < 2) return "";
+  const items = titles.map(title => `<span>${escapeHTML(title)}</span>`).join("");
+  // the list is written twice, so moving it left by half loops without a jump
+  return `<div class="strip" aria-hidden="true"><div class="strip-track">${items}${items}</div></div>`;
 }
 
 function aboutHTML(state) {
@@ -72,13 +87,18 @@ function contactHTML(state) {
   if (c.whatsapp) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
   if (c.address) rows.push(`<li>${escapeHTML(c.address)}</li>`);
   if (!rows.length) return "";
-  return `<section id="contact"><h2>Contact</h2><ul class="contact">${rows.join("")}</ul></section>`;
+  return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p><ul class="contact">${rows.join("")}</ul></section>`;
 }
 
 // Logo: the uploaded one, or a small square with the site's initials ("Dosa Corner" -> "DC")
+// "Dosa Corner" -> "DC"
+function initialsOf(state) {
+  return state.siteName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
+}
+
 function logoHTML(state) {
   if (safeImage(state.logo)) return imgHTML(state.logo, state.siteName + " logo", "logo");
-  const initials = state.siteName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
+  const initials = initialsOf(state);
   return initials ? `<span class="logo monogram" aria-hidden="true">${escapeHTML(initials)}</span>` : "";
 }
 
@@ -86,7 +106,8 @@ function footerHTML(state) {
   const links = Object.keys(state.social).filter(key => safeUrl(state.social[key]))
     .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
   const madeWith = state.madeWith ? `<p>Made with ${escapeHTML(APP_NAME)}</p>` : "";
-  return `<footer><p>${escapeHTML(state.footer || state.siteName)}</p>${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
+  const wordmark = `<p class="wordmark" aria-hidden="true">${escapeHTML(state.siteName)}</p>`;
+  return `<footer>${wordmark}<p>${escapeHTML(state.footer || state.siteName)}</p>${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
 }
 
 // Wraps a layout's body and CSS into a full page. Theme values become CSS variables.

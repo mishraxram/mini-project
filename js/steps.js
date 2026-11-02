@@ -129,6 +129,10 @@ function renderRail() {
 // Big outlined step number (decoration only), then "03 / 12" in mono and a thin bar
 function renderProgress() {
   const pad = n => String(n).padStart(2, "0");
+  // "turn" plays a short slide-in only when the step changes, not when a list row is added
+  const box = document.getElementById("wizard");
+  box.classList.toggle("turn", box.dataset.step !== String(current));
+  box.dataset.step = current;
   const line = el("div", "progress");
   const big = el("span", "big-num", pad(current + 1));
   big.setAttribute("aria-hidden", "true");
