@@ -2,8 +2,8 @@ node_modules
 .impeccable/hook.cache.json
 sites/
 # editor and machine files, not part of the project
-.idea/
-.vscode/
+.idea
+.vscode
 .mcp.json
 .bash_profile
 .bashrc
