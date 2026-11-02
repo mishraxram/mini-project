@@ -78,3 +78,5 @@
 | 74 | Split layout with 1 card | No empty left column | Menu row 2 col 1, About col 2; no strip | Pass |
 | 75 | Footer text empty | Site name not shown twice; Dark mode button inside the footer | 0 extra footer lines; button in footer | Pass |
 | 76 | Review step | Shows template name, not its id | "Classic / Rust" | Pass |
+| 77 | Theme personality on all 50 templates | Themes change button style (solid / outline / underline) and heading case, not only colors; no overflow; a11y clean | Every layout shows both filled and transparent buttons across themes; 0 overflow at 375 / 1280; a11y clean | Pass |
+| 78 | Gallery at 1440px | Tiles fill the row edge to edge | justify-content: space-between, no gap on the right | Pass |

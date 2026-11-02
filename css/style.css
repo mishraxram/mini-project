@@ -154,7 +154,7 @@ input[type="file"]:hover::file-selector-button { background: var(--ink); color: 
 .gallery-tools input[type="search"] { width: auto; flex: 1 1 160px; }
 .gallery-count { font-family: var(--mono); margin: 0 0 0 auto; }
 .gallery-empty { padding: 16px; border: 1px dashed var(--ink); }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, 200px); gap: 16px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, 200px); justify-content: space-between; gap: 16px; }
 .tile { position: relative; display: block; cursor: pointer; border: 1px solid var(--ink); background: #FFFFFF; transition: box-shadow 0.15s; }
 .tile[hidden] { display: none; }
 .tile input { position: absolute; opacity: 0; }

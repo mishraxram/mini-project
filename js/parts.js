@@ -144,7 +144,7 @@ function page(state, theme, css, body) {
   const title = escapeHTML(state.seo.title || state.siteName || "My site");
   const description = escapeHTML(state.seo.description);
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en" class="btn-${theme.button}${theme.caps ? " caps" : ""}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">

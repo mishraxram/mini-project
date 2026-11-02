@@ -31,6 +31,14 @@ header nav a:hover, aside nav a:hover { color: var(--accent); text-decoration-co
 .btn svg { transition: transform 0.2s ease-out; }
 .btn:hover svg { transform: translateX(4px); }
 
+/* theme personality (class on <html>). :where() keeps the button rules weak, so a layout's own .btn rules still win */
+:where(.btn-outline) .btn { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px currentColor; }
+:where(.btn-outline) .btn:hover { background: var(--text); color: var(--bg); }
+:where(.btn-underline) .btn { background: transparent; color: var(--text); padding: 4px 0; border-radius: 0;
+  border-bottom: 2px solid var(--accent); }
+:where(.btn-underline) .btn:hover { background: transparent; color: var(--accent); }
+.caps h2 { font-family: var(--body); font-size: 0.875rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.16em; }
+
 /* contact: the email is the big, easy target */
 .contact { list-style: none; padding: 0; }
 .contact .email a { font-family: var(--head); font-size: clamp(1.5rem, 4vw, 2.25rem); line-height: 1.2; color: var(--text);

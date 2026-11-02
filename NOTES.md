@@ -109,3 +109,7 @@
 ## Fixes from the three-agent review
 - What: design, accessibility and code reviewers ran in parallel; fixed: strip Pause button, linked error text, radio groups with a name, focus on the review step, placeholder contrast, button gap under the headline, Dark mode button moved into the footer, strip only with 3+ cards, Split grid hole, no repeated name in the footer, blank contact rows ignored, theme/template names on the review.
 - Why: these were the problems the reviewers verified; the WCAG A ones (moving content, group names, error links) matter most in a viva.
+
+## Theme personality
+- What: each theme now has button ("solid", "outline" or "underline") and caps (spaced capital section headings) in themes.js; page() puts them as classes on <html> and sitebase.js styles them.
+- Why: before, two templates of the same layout differed only in color, so the 50 thumbnails looked alike; it is still data only, so a new theme is still one object.
