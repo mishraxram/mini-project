@@ -76,7 +76,7 @@ textarea { min-height: 120px; resize: vertical; font-family: var(--serif); font-
 input:not([type="radio"]):not([type="checkbox"]):hover, textarea:hover { background: #FFFFFF; }
 .field > input:not([type]):hover, .list-row input:not([type]):hover { background: transparent; border-color: var(--accent-text); }
 .field > input:not([type]):focus-visible, .list-row input:not([type]):focus-visible { outline: 0; border-bottom: 2px solid var(--accent); margin-bottom: -1px; }
-::placeholder { color: #8A8478; font-style: italic; }
+::placeholder { color: var(--muted); font-style: italic; }  /* 5.1:1 on paper */
 .has-error input, .has-error textarea { border-color: var(--accent); border-bottom-width: 2px; }
 .error { margin: 4px 0 0; color: var(--accent-text); font-size: 0.875rem; }
 .list-row { display: flex; align-items: end; gap: 16px; margin-bottom: 8px; }
@@ -91,7 +91,7 @@ input:not([type="radio"]):not([type="checkbox"]):hover, textarea:hover { backgro
 .field:has(> .option) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .field:has(> .option) > :not(.option) { grid-column: 1 / -1; }
 .field > .option { position: relative; display: flex; align-items: center; gap: 12px; margin: 0; padding: 16px; border: 1px solid var(--ink);
-  background: var(--field); font-family: var(--sans); font-size: 1rem; letter-spacing: 0; text-transform: capitalize; cursor: pointer;
+  min-width: 0; overflow-wrap: anywhere; background: var(--field); font-family: var(--sans); font-size: 1rem; letter-spacing: 0; text-transform: capitalize; cursor: pointer;
   transition: background-color 0.15s, color 0.15s; }
 .field > .option:hover { background: #FFFFFF; }
 .field > .option input { position: absolute; opacity: 0; }  /* still focusable and read by screen readers */

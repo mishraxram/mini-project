@@ -105,3 +105,7 @@
 ## Signature details (generated sites)
 - What: big outlined initials in the Classic hero when there is no photo, a slowly moving strip of card titles under every hero, a large closing line in Contact by site type ("Book a table or order in."), and the site name as a giant wordmark across the footer (sized with container units so it never overflows). The builder slides each new step in.
 - Why: every site now has something to remember it by, using only the user's own name and card titles, so nothing needs an image or the internet.
+
+## Fixes from the three-agent review
+- What: design, accessibility and code reviewers ran in parallel; fixed: strip Pause button, linked error text, radio groups with a name, focus on the review step, placeholder contrast, button gap under the headline, Dark mode button moved into the footer, strip only with 3+ cards, Split grid hole, no repeated name in the footer, blank contact rows ignored, theme/template names on the review.
+- Why: these were the problems the reviewers verified; the WCAG A ones (moving content, group names, error links) matter most in a viva.

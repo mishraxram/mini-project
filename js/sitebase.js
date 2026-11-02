@@ -44,12 +44,14 @@ header nav a:hover, aside nav a:hover { color: var(--accent); text-decoration-co
   font-family: var(--head); font-size: 0.85em; font-weight: bold; letter-spacing: 0; border-radius: min(var(--r), 8px); }
 /* uploaded images: cropped to a fixed shape so every site looks tidy */
 .hero-img, .about-img, .card-img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: min(var(--r), 12px); }
+.hero h1 + .btn { margin-top: calc(var(--s) * 2); }  /* no subtext: keep the button off the headline */
 .hero-img { aspect-ratio: 16 / 9; margin-top: calc(var(--s) * 2); }
 .about-img { aspect-ratio: 4 / 3; max-width: 28rem; margin-bottom: var(--s); }
 .card-img { aspect-ratio: 4 / 3; margin-bottom: var(--s); }
 /* header stays on top while scrolling; sections stop below it when a menu link is clicked */
 header { position: sticky; top: 0; z-index: 1; background: var(--bg); }
 section { scroll-margin-top: 5rem; }
+html { scroll-padding-top: 5rem; }  /* a focused link is never hidden under the sticky header */
 .to-top { color: inherit; }
 .wa { position: fixed; right: 16px; bottom: 16px; z-index: 2; background: var(--accent); color: var(--on-accent);
   padding: 10px 16px; border-radius: min(var(--r), 24px); text-decoration: none; font-weight: bold; }
@@ -59,11 +61,15 @@ section { scroll-margin-top: 5rem; }
   letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--accent); user-select: none; }
 
 /* moving strip of card titles under the hero */
-.strip { overflow: hidden; border-block: 1px solid var(--line); padding: calc(var(--s) * 0.75) 0; grid-column: 1 / -1; }
+.strip { position: relative; overflow: hidden; border-block: 1px solid var(--line); padding: calc(var(--s) * 0.75) 0;
+  margin-bottom: calc(var(--s) * 2); grid-column: 1 / -1; }
 .strip-track { display: flex; width: max-content; font-family: var(--head); font-size: clamp(1.25rem, 3vw, 2rem); white-space: nowrap; }
 .strip-track span { padding-right: 1.5em; }
 .strip-track span::after { content: "/"; padding-left: 1.5em; color: var(--accent); }
-.strip:hover .strip-track { animation-play-state: paused; }
+.strip:hover .strip-track, .strip.paused .strip-track { animation-play-state: paused; }
+/* Pause button for the strip (added by REVEAL_SCRIPT only when the strip moves) */
+.strip-btn { position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 4px 10px; font: inherit; font-size: 0.75rem;
+  cursor: pointer; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: min(var(--r), 8px); }
 
 /* contact: one big closing line before the details */
 #contact .cta { max-width: 18ch; margin-bottom: calc(var(--s) * 1.5); font-family: var(--head); font-weight: bold;
@@ -97,9 +103,8 @@ footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom
   .menu-btn + nav.open { display: block; }
   .menu-btn + nav a { display: block; margin: 0; padding: 8px 0; }
 }
-.mode-btn { position: fixed; left: 16px; bottom: 16px; z-index: 2; font: inherit; font-size: 0.875rem; cursor: pointer;
-  background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: min(var(--r), 24px); padding: 8px 14px;
-  transition: background-color 0.2s, color 0.2s; }
+.mode-btn { font: inherit; font-size: 0.875rem; cursor: pointer; background: var(--bg); color: var(--text);
+  border: 1px solid var(--line); border-radius: min(var(--r), 24px); padding: 8px 14px; transition: background-color 0.2s, color 0.2s; }
 .mode-btn:hover { background: var(--text); color: var(--bg); }
 `;
 
@@ -137,7 +142,7 @@ if (menu && menu.children.length) {
 }
 </script>`;
 
-// Sections fade in once as they scroll into view. Without JavaScript, or with
+// Sections fade in once as they scroll into view, and the strip gets a Pause button. Without JavaScript, or with
 // reduced motion, nothing is hidden, because the "reveal" class is added here.
 const REVEAL_SCRIPT = `<script>
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
@@ -148,5 +153,16 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
     section.classList.add("reveal");
     watcher.observe(section);
   });
+  // the strip moves for ever, so visitors get a button to stop it (WCAG 2.2.2)
+  const strip = document.querySelector(".strip");
+  if (strip) {
+    const pause = document.createElement("button");
+    pause.className = "strip-btn";
+    pause.type = "button";
+    pause.textContent = "Pause";
+    pause.setAttribute("aria-pressed", "false");
+    pause.onclick = () => pause.setAttribute("aria-pressed", strip.classList.toggle("paused"));
+    strip.append(pause);
+  }
 }
 </script>`;

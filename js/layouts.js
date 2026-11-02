@@ -19,7 +19,7 @@ section { padding: calc(var(--s) * 3) 0; border-top: 1px solid var(--line); }
 .hero:has(.hero-art) { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) auto;
   column-gap: calc(var(--s) * 3); align-items: center; }
 .hero:has(.hero-art) > :not(.hero-art) { grid-column: 1; justify-self: start; }
-.hero .hero-art { display: block; grid-column: 2; grid-row: 1 / span 4; font-size: clamp(8rem, 20vw, 17rem); }
+.hero:has(.hero-art) .hero-art { display: block; grid-column: 2; grid-row: 1 / span 4; font-size: clamp(8rem, 20vw, 17rem); }
 .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.05; }
 .hero p { font-size: 1.25rem; color: var(--muted); margin: calc(var(--s) * 1.5) 0 calc(var(--s) * 2); }
 h2 { font-size: 1.75rem; margin-bottom: calc(var(--s) * 1.5); }
@@ -35,7 +35,7 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
   .hero:has(.hero-img) { grid-template-columns: minmax(0, 1fr); }
   .hero .hero-img { grid-column: 1; grid-row: auto; margin-top: calc(var(--s) * 2); }
   .hero:has(.hero-art) { grid-template-columns: minmax(0, 1fr); }
-  .hero .hero-art { display: none; }
+  .hero:has(.hero-art) .hero-art { display: none; }
 }`;
   return page(state, theme, css, `<header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
@@ -48,7 +48,7 @@ body { font-size: 1rem; line-height: 1.7; display: grid; grid-template-columns: 
 aside { padding: calc(var(--s) * 2); border-right: 1px solid var(--line); }
 aside strong { display: block; font-size: 1.5rem; line-height: 1.1; margin-bottom: calc(var(--s) * 2); }
 aside nav a { display: block; padding: calc(var(--s) * 0.25) 0; color: var(--text); text-decoration: none; }
-main { min-width: 0; padding: calc(var(--s) * 3); max-width: 48rem; }  /* min-width 0: the moving strip must not widen the column */
+main { min-width: 0; padding: calc(var(--s) * 3); max-width: 60rem; }  /* min-width 0: the moving strip must not widen the column */
 section { margin-bottom: calc(var(--s) * 3); }
 .hero h1 { font-size: 2.25rem; line-height: 1.15; }
 .hero p { color: var(--muted); margin: var(--s) 0 calc(var(--s) * 1.5); }
@@ -116,7 +116,8 @@ main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap:
 .hero .btn { justify-self: start; }
 .hero .hero-img { grid-column: 1 / -1; margin: 0; aspect-ratio: 21 / 9; }
 .strip { grid-row: 2; }
-.work { grid-column: 1; grid-row: 3 / span 2; }
+.work { grid-column: 1; grid-row: 2 / span 2; }
+main:has(.strip) .work { grid-row: 3 / span 2; }  /* the strip takes row 2 when it is there */
 #contact .cta { font-size: 1.75rem; }
 #about, #contact { grid-column: 2; border: 1px solid var(--line); border-radius: min(var(--r), 12px); padding: calc(var(--s) * 1.5); }
 h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-bottom: 2px solid var(--accent); }

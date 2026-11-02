@@ -72,3 +72,9 @@
 | 68 | 3 card titles | Moving strip under the hero, pauses on hover, still when reduced motion is on | 6 spans (list written twice for a seamless loop) | Pass |
 | 69 | Fixed Dark mode button at the bottom of the page | Never covers footer text | 72px space under the footer | Pass |
 | 70 | Split layout with the label | Headline stays in the left column | Fixed (label now spans both columns) | Pass |
+| 71 | Moving strip with keyboard / touch | A Pause button stops it (WCAG 2.2.2) | Pause sets aria-pressed true and stops the slide | Pass |
+| 72 | Empty Site name, Next | Error linked to the field | aria-invalid true, aria-describedby f-siteName-error, role alert | Pass |
+| 73 | Site type step with a screen reader | Group has a name | role radiogroup, labelled "Site type *" | Pass |
+| 74 | Split layout with 1 card | No empty left column | Menu row 2 col 1, About col 2; no strip | Pass |
+| 75 | Footer text empty | Site name not shown twice; Dark mode button inside the footer | 0 extra footer lines; button in footer | Pass |
+| 76 | Review step | Shows template name, not its id | "Classic / Rust" | Pass |

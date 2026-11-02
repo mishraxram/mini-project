@@ -53,8 +53,9 @@ function render() {
   box.append(nav);
   document.getElementById("rail").replaceChildren(renderRail());
 
-  const first = box.querySelector("input, textarea");
-  if (first) first.focus();
+  const first = box.querySelector("input, textarea") || box.querySelector("h1");
+  if (first.tagName === "H1") first.tabIndex = -1;  // review step: focus the title, not the page
+  first.focus();
   schedulePreview();
   saveState();
   scheduleRecord();
@@ -65,7 +66,9 @@ function renderInput(input) {
   const wrap = el("div", "field");
   const id = "f-" + input.field.replace(".", "-");
   const label = el("label", "", input.label + (input.required ? " *" : ""));
-  label.htmlFor = id;
+  label.id = id + "-label";
+  if (input.type === "mcq") { wrap.setAttribute("role", "radiogroup"); wrap.setAttribute("aria-labelledby", label.id); }
+  else label.htmlFor = id;
   wrap.append(label);
 
   if (input.image) {
@@ -98,7 +101,7 @@ function renderInput(input) {
 
   if (errors[input.field]) {
     wrap.classList.add("has-error");
-    wrap.append(el("p", "error", errors[input.field]));
+    wrap.append(errorLine(wrap, id, errors[input.field]));
   }
   return wrap;
 }
@@ -142,6 +145,7 @@ function renderReview() {
     inputsOf(step).forEach(input => {
       let value = getValue(input.field);
       if (input.image && value) value = "Image added";  // not the long base64 text
+      if (input.type === "mcq") value = ([...TEMPLATES, ...THEMES].find(t => t.id === value) || {}).name || value;
       if (Array.isArray(value)) value = value.map(v => typeof v === "object" ? v.title + " - " + v.detail : v).join(", ");
       list.append(el("dt", "", input.label), el("dd", "", value || "(empty)"));
     });

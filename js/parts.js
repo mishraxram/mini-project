@@ -52,11 +52,11 @@ ${!safeImage(state.heroImage) && initialsOf(state) ? `<p class="hero-art" aria-h
 </section>${stripHTML(state)}`;
 }
 
-// A slowly moving line of the card titles under the hero (needs 2 or more).
+// A slowly moving line of the card titles under the hero (needs 3 or more, fewer looks repetitive).
 // aria-hidden: the same titles are listed again in the cards section.
 function stripHTML(state) {
   const titles = state.cards.map(card => card.title.trim()).filter(Boolean);
-  if (titles.length < 2) return "";
+  if (titles.length < 3) return "";
   const items = titles.map(title => `<span>${escapeHTML(title)}</span>`).join("");
   // the list is written twice, so moving it left by half loops without a jump
   return `<div class="strip" aria-hidden="true"><div class="strip-track">${items}${items}</div></div>`;
@@ -82,20 +82,20 @@ function contactHTML(state) {
   const c = state.contact;
   const rows = [];
   // the email is shown large (class "email"), the other rows are normal size
-  if (c.email) rows.push(`<li class="email"><a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a></li>`);
-  if (c.phone) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
-  if (c.whatsapp) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
-  if (c.address) rows.push(`<li>${escapeHTML(c.address)}</li>`);
+  if (c.email.trim()) rows.push(`<li class="email"><a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a></li>`);
+  if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
+  if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
+  if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
   if (!rows.length) return "";
   return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p><ul class="contact">${rows.join("")}</ul></section>`;
 }
 
-// Logo: the uploaded one, or a small square with the site's initials ("Dosa Corner" -> "DC")
 // "Dosa Corner" -> "DC"
 function initialsOf(state) {
   return state.siteName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
 }
 
+// Logo: the uploaded one, or a small square with the site's initials
 function logoHTML(state) {
   if (safeImage(state.logo)) return imgHTML(state.logo, state.siteName + " logo", "logo");
   const initials = initialsOf(state);
@@ -107,10 +107,9 @@ function footerHTML(state) {
     .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
   const madeWith = state.madeWith ? `<p>Made with ${escapeHTML(APP_NAME)}</p>` : "";
   const wordmark = `<p class="wordmark" aria-hidden="true">${escapeHTML(state.siteName)}</p>`;
-  return `<footer>${wordmark}<p>${escapeHTML(state.footer || state.siteName)}</p>${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
+  return `<footer>${wordmark}${state.footer.trim() ? `<p>${escapeHTML(state.footer)}</p>` : ""}${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
 }
 
-// Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
 // Which embedded font files each family needs (data is in fontdata.js)
 const FONT_FILES = {
   "Fraunces": [["fraunces-400", 400], ["fraunces-700", 700]],
@@ -137,6 +136,7 @@ function colorVars(c) {
   return `--bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent}; --line: ${c.line};`;
 }
 
+// Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
 function page(state, theme, css, body) {
   const c = theme.colors;
   // The mode button swaps a light theme to Ink colors and a dark theme to Paper colors
@@ -160,8 +160,7 @@ html.other-mode { ${colorVars(other)} }
 ${SITE_CSS}
 ${css}
 </style></head>
-<body>${body}${whatsappHTML(state)}
-<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button>
+<body>${body.replace("</footer>", `<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button></footer>`)}${whatsappHTML(state)}
 ${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}</body></html>`;
 }
 

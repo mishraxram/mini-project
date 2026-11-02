@@ -98,3 +98,16 @@ function validate(step, value) {
   if (step.check === "phone" && !/^\+?[0-9 -]{7,15}$/.test(text)) return "Enter a valid phone number: digits, spaces or -, 7 to 15 long.";
   return "";
 }
+
+// Error text under a field, linked to the field so screen readers read it with the field
+function errorLine(wrap, id, message) {
+  const line = el("p", "error", message);
+  line.id = id + "-error";
+  line.setAttribute("role", "alert");
+  const box = wrap.querySelector("#" + id);
+  if (box) {
+    box.setAttribute("aria-invalid", "true");
+    box.setAttribute("aria-describedby", line.id);
+  }
+  return line;
+}
