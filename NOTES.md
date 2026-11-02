@@ -89,3 +89,11 @@
 ## Builder polish
 - What: all 12 steps listed under the form like a contents page (done ones struck through), a note in the empty preview, smaller mono header buttons, and Publish explains itself when the builder runs online.
 - Why: the first screen was a form beside a blank white box; now the user sees the whole path and where they are, and Next stays the strongest button.
+
+## Premium pass (generated sites)
+- What: shared site CSS and scripts moved to sitebase.js; every hero gets a small label by site type ("Kitchen and dining"), the button reads "Get in touch" with an SVG arrow, the email is shown large, sections fade in once on scroll, links and buttons have 0.2s hover transitions, and the footer has Back to top.
+- Why: these small editorial details are what make a page feel designed; motion is skipped for reduced-motion visitors and in the live preview, which reloads on every key.
+
+## Premium pass (builder)
+- What: multiple choice steps are tiles (themes show their colors, fonts show "Aa"), a thin progress bar sits beside "04 / 12", bigger inputs, "Next ->", a ruled review table, and a hard offset shadow on the preview.
+- Why: the user sees the result of a choice before picking it; the hard shadow fits the print look and is not a soft blur shadow.

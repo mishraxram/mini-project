@@ -60,3 +60,7 @@
 | 56 | Step list on step 5 | Steps 1-4 struck through, step 5 marked, rest grey | done=4, now="Menu items" | Pass |
 | 57 | Builder at 375px | No sideways scroll; step list hidden | overflow 0 | Pass |
 | 58 | Publish from a hosted copy (not localhost) | Clear error: use Download online | Message shown, no request sent | Pass |
+| 59 | All 50 templates after the premium pass | No overflow at 375 / 1280px; kicker 12px; a11y check clean | 0 overflow, kicker 12px everywhere, no a11y problems (apart from missing description) | Pass |
+| 60 | Section reveal with JavaScript off (gallery thumbnails) | Every section visible | Visible: the reveal class is only added by the script | Pass |
+| 61 | Step 4 tiles | Each theme tile shows 4 color squares; font tiles show "Aa" in that font; picked tile turns ink | 40 swatches; checked tile ink | Pass |
+| 62 | Progress bar on step 4 | Bar at 4 of 12 | value 4 | Pass |

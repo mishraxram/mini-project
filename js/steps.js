@@ -117,3 +117,15 @@ function renderRail() {
   });
   return list;
 }
+
+// "03 / 12" in mono, with a thin bar that fills as the user moves through the steps
+function renderProgress() {
+  const pad = n => String(n).padStart(2, "0");
+  const line = el("p", "progress", pad(current + 1) + " / " + pad(STEPS.length));
+  const bar = el("progress");
+  bar.max = STEPS.length;
+  bar.value = current + 1;
+  bar.setAttribute("aria-label", "Step " + (current + 1) + " of " + STEPS.length);
+  line.append(bar);
+  return line;
+}

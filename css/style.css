@@ -23,10 +23,15 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 h1, h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -0.01em; }
-h1 { font-size: 2.5rem; line-height: 1.1; margin: 8px 0 16px; }
+h1 { font-size: clamp(2.25rem, 4vw, 3.25rem); line-height: 1.05; letter-spacing: -0.02em; margin: 16px 0 16px; }
 h2 { font-size: 1.5rem; }
 #wizard { max-width: 640px; }
-.progress { margin: 0; font-family: var(--mono); font-size: 0.875rem; letter-spacing: 0.05em; color: var(--accent-text); }
+.progress { display: flex; align-items: center; gap: 16px; margin: 0; font-family: var(--mono); font-size: 0.875rem; letter-spacing: 0.05em; color: var(--accent-text); }
+/* thin bar after "03 / 12": ink track, accent fill */
+.progress progress { appearance: none; width: 160px; height: 2px; border: 0; background: #D8D2C4; }
+.progress progress::-webkit-progress-bar { background: #D8D2C4; }
+.progress progress::-webkit-progress-value { background: var(--accent); transition: width 0.3s ease-out; }
+.progress progress::-moz-progress-bar { background: var(--accent); }
 .help { margin-top: 0; max-width: 52ch; }
 
 /* form fields */
@@ -34,8 +39,8 @@ h2 { font-size: 1.5rem; }
 .field > label { display: block; margin-bottom: 4px; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .option { display: block; padding: 4px 0; cursor: pointer; }
 input:not([type="radio"]):not([type="checkbox"]), textarea {
-  width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid var(--ink); border-radius: 0;
-  background: #FFFDF8; color: var(--ink); font: inherit;
+  width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--ink); border-radius: 0;
+  background: #FFFDF8; color: var(--ink); font: inherit; transition: background-color 0.15s;
 }
 input:not([type="radio"]):not([type="checkbox"]):hover, textarea:hover { background: #FFFFFF; }
 input:focus-visible, textarea:focus-visible { outline-offset: 0; }
@@ -51,15 +56,20 @@ textarea { min-height: 96px; resize: vertical; }
 
 /* buttons: hover, focus, pressed and disabled all look different */
 .nav { display: flex; gap: 8px; margin-top: 32px; }
-button { padding: 8px 16px; border: 1px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+button { padding: 8px 16px; border: 1px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
 button:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
 button:active:not(:disabled) { transform: translateY(1px); }
 button.primary { background: var(--ink); color: var(--paper); }
+.nav button { min-height: 48px; padding: 8px 24px; }
+.nav .primary::after { content: "  \2192"; }  /* arrow after Next */
 button.primary:hover:not(:disabled) { background: var(--accent-text); border-color: var(--accent-text); }
 button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.review dt { margin-top: 12px; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; }
-.review dd { margin: 0; }
+/* review: a ruled two-column table, label left, answer right */
+.review { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); margin: 0; border-top: 1px solid var(--ink); }
+.review dt, .review dd { margin: 0; padding: 8px 0; border-bottom: 1px solid #D8D2C4; }
+.review dt { font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 10px; }
 
 /* builder: wizard left (7), live preview right (5) */
 /* minmax(0, ...) stops the 1280px preview frame from stretching its column */
@@ -68,7 +78,8 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 .preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
 .preview-label { font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; }
 #preview-devices { display: flex; gap: 4px; }
-#preview-stage { flex: 1; overflow: hidden; border: 1px solid #1A1A1A; background: #FFFFFF; }
+/* hard offset shadow, like a printed proof on the desk (no soft blur) */
+#preview-stage { flex: 1; overflow: hidden; border: 1px solid #1A1A1A; background: #FFFFFF; box-shadow: 8px 8px 0 var(--ink); }
 #preview-frame { display: block; border: 0; transform-origin: 0 0; }
 /* the gallery already shows previews, so it gets the full width */
 .builder:has(.gallery) { grid-template-columns: minmax(0, 1fr); }
@@ -152,3 +163,17 @@ input[type="file"]:hover::file-selector-button { background: var(--ink); color: 
 /* header file tools: smaller and quieter than the step buttons, so Next stays the main action */
 .project-tools button { padding: 4px 12px; font-family: var(--mono); font-size: 0.8125rem; }
 #redo-btn { margin-right: 16px; }
+
+/* multiple choice (site type, theme, font) as tiles instead of a plain radio list */
+.field:has(> .option) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.field:has(> .option) > :not(.option) { grid-column: 1 / -1; }
+.field > .option { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--ink);
+  margin: 0; background: #FFFDF8; font-family: var(--sans); font-size: 1rem; letter-spacing: 0; text-transform: capitalize;
+  cursor: pointer; transition: background-color 0.15s, color 0.15s; }
+.field > .option:hover { background: #FFFFFF; }
+.field > .option input { position: absolute; opacity: 0; }  /* still focusable and read by screen readers */
+.field > .option:has(input:checked) { background: var(--ink); color: var(--paper); }
+.field > .option:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.option-extra { display: flex; gap: 2px; font-size: 1.25rem; line-height: 1; }
+.option-extra:empty { display: none; }
+.swatch { width: 12px; height: 24px; border: 1px solid currentColor; }

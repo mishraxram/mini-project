@@ -25,10 +25,9 @@ function inputsOf(step) {
 function render() {
   const step = STEPS[current];
   const box = document.getElementById("wizard");
-  const pad = n => String(n).padStart(2, "0");
 
   box.replaceChildren(
-    el("p", "progress", pad(current + 1) + " / " + pad(STEPS.length)),
+    renderProgress(),
     el("h1", "", step.title),
     el("p", "help", step.help)
   );
@@ -81,7 +80,7 @@ function renderInput(input) {
       radio.checked = getValue(input.field) === option;
       radio.onchange = () => setValue(input.field, option);
       const optionLabel = el("label", "option");
-      optionLabel.append(radio, " " + option);
+      optionLabel.append(radio, optionExtra(input.field, option), " " + option);
       wrap.append(optionLabel);
     });
   } else if (input.type === "list") {

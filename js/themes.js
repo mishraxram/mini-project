@@ -49,3 +49,21 @@ const THEMES = [
   { id: "night", name: "Night", dark: true, headingFont: DMSANS, bodyFont: DMSANS, radius: 8, spacing: 16,
     colors: { bg: "#10161C", text: "#DDE3E8", muted: "#93A1AD", accent: "#4FB3A9", onAccent: "#10161C", line: "#2A343D" } }
 ];
+
+// Small extra shown on a step 4 option: four color squares for a theme, "Aa" in the font for a font style
+function optionExtra(field, option) {
+  const box = el("span", "option-extra");
+  box.setAttribute("aria-hidden", "true");
+  const theme = THEMES.find(t => t.id === option);
+  if (field === "themeId" && theme) {
+    ["bg", "text", "accent", "line"].forEach(key => {
+      const square = el("span", "swatch");
+      square.style.background = theme.colors[key];
+      box.append(square);
+    });
+  } else if (field === "fontStyle" && FONT_STYLES[option]) {
+    box.textContent = "Aa";
+    box.style.fontFamily = FONT_STYLES[option].headingFont;
+  }
+  return box;
+}
