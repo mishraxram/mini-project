@@ -141,7 +141,8 @@ function renderExport() {
   publishButton.onclick = () => {
     error.hidden = true;
     result.replaceChildren();
-    if (location.protocol === "file:") return showError("Publish needs the local server. Run npm start, then open http://localhost:3000");
+    // opened as a file, or from an online host like GitHub Pages: there is no publish server behind it
+    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
     publishButton.disabled = true;
     publishSite()
       .then(answer => {

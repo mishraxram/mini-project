@@ -85,3 +85,7 @@
 ## Dark mode button
 - What: every generated site has a small fixed button (bottom left) that swaps a light theme to Ink colors, or a dark theme (dark: true in themes.js) to Paper colors, and remembers the choice per page in localStorage.
 - Why: all layout colors are CSS variables, so one extra class on <html> swaps the whole palette; Ink and Paper already pass the contrast check.
+
+## Builder polish
+- What: all 12 steps listed under the form like a contents page (done ones struck through), a note in the empty preview, smaller mono header buttons, and Publish explains itself when the builder runs online.
+- Why: the first screen was a form beside a blank white box; now the user sees the whole path and where they are, and Next stays the strongest button.

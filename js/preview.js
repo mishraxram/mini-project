@@ -15,6 +15,8 @@ function schedulePreview() {
 }
 
 function updatePreview() {
+  // no name yet: the stage shows a short message instead of an empty page (see .empty in style.css)
+  document.getElementById("preview-stage").classList.toggle("empty", !state.siteName.trim());
   const html = buildSite(state);
   if (html === lastPreview) return;  // nothing changed, keep the scroll position
   lastPreview = html;

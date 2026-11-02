@@ -56,3 +56,7 @@
 | 52 | Dark mode button, light theme (Paper, Harbor) in all 5 layouts | Click turns the site dark (Ink colors), aria-pressed true | Background #F5F1E8 / #EEF2F5 to #1A1A1A, pressed true | Pass |
 | 53 | Mode button on a dark theme (Ink, Night) | Says "Light mode", click gives Paper colors | Night #10161C to #F5F1E8 | Pass |
 | 54 | Refresh after picking dark mode | Choice remembered for that page only | Still dark after reload; key is per page path | Pass |
+| 55 | Open the builder with no answers | Preview says "Your site shows up here" instead of a blank page | Note shown; disappears once a name is typed | Pass |
+| 56 | Step list on step 5 | Steps 1-4 struck through, step 5 marked, rest grey | done=4, now="Menu items" | Pass |
+| 57 | Builder at 375px | No sideways scroll; step list hidden | overflow 0 | Pass |
+| 58 | Publish from a hosted copy (not localhost) | Clear error: use Download online | Message shown, no request sent | Pass |

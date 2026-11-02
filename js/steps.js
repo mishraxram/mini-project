@@ -105,3 +105,15 @@ function applyTypeDefaults() {
     Object.values(SITE_DEFAULTS).some(d => JSON.stringify(d.menu) === menuNow);
   if (defaults && untouched) state.menuItems = defaults.menu.slice();
 }
+
+// List of all 12 steps under the form: done ones are ticked, the one on screen is marked
+function renderRail() {
+  const list = el("ol", "rail");
+  list.setAttribute("aria-label", "All steps");
+  STEPS.forEach((step, i) => {
+    const item = el("li", i < current ? "done" : i === current ? "now" : "", step.title);
+    if (i === current) item.setAttribute("aria-current", "step");
+    list.append(item);
+  });
+  return list;
+}

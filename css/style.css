@@ -132,3 +132,23 @@ input[type="file"]:hover::file-selector-button { background: var(--ink); color: 
 .tile:has(input:checked) { outline: 3px solid #D94F2B; outline-offset: -1px; }
 .tile:has(input:checked) .tile-name { background: #1A1A1A; color: #F5F1E8; }
 .tile:has(input:focus-visible) { outline: 3px solid #1A1A1A; outline-offset: 2px; }
+
+/* all 12 steps under the form, in two columns like a contents page */
+.rail { margin: 32px 0 0; padding: 16px 0 0; border-top: 1px solid var(--ink); list-style: decimal-leading-zero inside;
+  columns: 2; column-gap: 32px; font-family: var(--mono); font-size: 0.8125rem; color: #6B655B; }
+.rail li { padding: 4px 0; break-inside: avoid; }
+.rail li::marker { color: #6B655B; }
+.rail .done { color: var(--ink); }
+.rail .done { text-decoration: line-through; text-decoration-thickness: 1px; }
+.rail .now { color: var(--accent-text); font-weight: 700; }
+.rail .now::marker { color: var(--accent-text); }
+@media (max-width: 900px) { .rail { display: none; } }  /* on phones "05 / 12" is enough; the preview comes first */
+
+/* preview before the site has a name: a short note instead of a blank white page */
+#preview-stage { position: relative; }
+#preview-stage.empty::after { content: "Your site shows up here.\A Start with a name on the left."; white-space: pre-line;
+  position: absolute; inset: 0; padding: 32px; background: var(--paper); font-family: var(--serif); font-size: 1.5rem; line-height: 1.3; }
+
+/* header file tools: smaller and quieter than the step buttons, so Next stays the main action */
+.project-tools button { padding: 4px 12px; font-family: var(--mono); font-size: 0.8125rem; }
+#redo-btn { margin-right: 16px; }
