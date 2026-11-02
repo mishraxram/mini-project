@@ -50,7 +50,8 @@ function render() {
   next.disabled = current === STEPS.length - 1;
   next.onclick = goNext;
   nav.append(next);
-  box.append(nav, renderRail());
+  box.append(nav);
+  document.getElementById("rail").replaceChildren(renderRail());
 
   const first = box.querySelector("input, textarea");
   if (first) first.focus();

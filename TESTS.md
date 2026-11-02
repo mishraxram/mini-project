@@ -64,3 +64,6 @@
 | 60 | Section reveal with JavaScript off (gallery thumbnails) | Every section visible | Visible: the reveal class is only added by the script | Pass |
 | 61 | Step 4 tiles | Each theme tile shows 4 color squares; font tiles show "Aa" in that font; picked tile turns ink | 40 swatches; checked tile ink | Pass |
 | 62 | Progress bar on step 4 | Bar at 4 of 12 | value 4 | Pass |
+| 63 | Proof desk layout at 1440 / 1366 / 390px | No sideways scroll; step index shows above 1200px, hidden below | overflow 0 at all three; index visible at 1440 and 1366 | Pass |
+| 64 | Click "03 Pick a template" in the step index from step 7 | Jumps back to step 3; later steps cannot be clicked | Now 03 / 12, 0 forward buttons | Pass |
+| 65 | Proof bar | Shows file name and device width | "dosa-corner.html", "Desktop / 1280 px" | Pass |

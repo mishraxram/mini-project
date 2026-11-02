@@ -20,6 +20,7 @@ function updatePreview() {
   const html = buildSite(state);
   if (html === lastPreview) return;  // nothing changed, keep the scroll position
   lastPreview = html;
+  document.getElementById("proof-file").textContent = siteFileName() + ".html";
   // The preview reloads after every typed letter, so it is shown without the entry animations
   document.getElementById("preview-frame").srcdoc = html.replace("</head>",
     "<style>.hero > *, .reveal { animation: none; opacity: 1; transform: none; transition: none; }</style></head>");
@@ -31,6 +32,7 @@ function fitPreview() {
   const frame = document.getElementById("preview-frame");
   if (!stage.clientWidth) return;  // panel is hidden (gallery step)
   const scale = Math.min(1, stage.clientWidth / device.width);
+  document.getElementById("proof-width").textContent = device.name + " / " + device.width + " px";
   frame.style.width = device.width + "px";
   frame.style.height = stage.clientHeight / scale + "px";
   frame.style.transform = "scale(" + scale + ")";

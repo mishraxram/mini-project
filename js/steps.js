@@ -106,26 +106,36 @@ function applyTypeDefaults() {
   if (defaults && untouched) state.menuItems = defaults.menu.slice();
 }
 
-// List of all 12 steps under the form: done ones are ticked, the one on screen is marked
+// List of all 12 steps beside the form. Finished steps are buttons, so the user can jump back.
+// Later steps are plain text: they must be reached with Next, so every step is checked.
 function renderRail() {
   const list = el("ol", "rail");
-  list.setAttribute("aria-label", "All steps");
   STEPS.forEach((step, i) => {
-    const item = el("li", i < current ? "done" : i === current ? "now" : "", step.title);
+    const item = el("li", i < current ? "done" : i === current ? "now" : "");
+    if (i < current) {
+      const jump = el("button", "", step.title);
+      jump.type = "button";
+      jump.onclick = () => { errors = {}; current = i; render(); };
+      item.append(jump);
+    } else {
+      item.textContent = step.title;
+    }
     if (i === current) item.setAttribute("aria-current", "step");
     list.append(item);
   });
   return list;
 }
 
-// "03 / 12" in mono, with a thin bar that fills as the user moves through the steps
+// Big outlined step number (decoration only), then "03 / 12" in mono and a thin bar
 function renderProgress() {
   const pad = n => String(n).padStart(2, "0");
-  const line = el("p", "progress", pad(current + 1) + " / " + pad(STEPS.length));
+  const line = el("div", "progress");
+  const big = el("span", "big-num", pad(current + 1));
+  big.setAttribute("aria-hidden", "true");
   const bar = el("progress");
   bar.max = STEPS.length;
   bar.value = current + 1;
   bar.setAttribute("aria-label", "Step " + (current + 1) + " of " + STEPS.length);
-  line.append(bar);
+  line.append(big, el("span", "count", pad(current + 1) + " / " + pad(STEPS.length)), bar);
   return line;
 }

@@ -97,3 +97,7 @@
 ## Premium pass (builder)
 - What: multiple choice steps are tiles (themes show their colors, fonts show "Aa"), a thin progress bar sits beside "04 / 12", bigger inputs, "Next ->", a ruled review table, and a hard offset shadow on the preview.
 - Why: the user sees the result of a choice before picking it; the hard shadow fits the print look and is not a soft blur shadow.
+
+## Proof desk redesign (builder)
+- What: three columns (step index, form, proof); a big outlined step number; answers typed in large serif on a ruled line; file tools as quiet mono links under a thick ink masthead; the preview has an ink bar with the file name and device width.
+- Why: the old screen was a plain form next to a box, the same as most builders; now it reads like filling in a printed form and checking a proof, and finished steps can be reopened from the index.

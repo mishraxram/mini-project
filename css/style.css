@@ -1,4 +1,4 @@
-/* WebCraft builder styles. Editorial look: paper, ink, one accent. Fonts load from /fonts, so it works offline. */
+/* WebCraft builder. Editorial "proof desk": step index | form | printed proof. Local fonts only, works offline. */
 @font-face { font-family: "Fraunces"; src: url("../fonts/fraunces-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Fraunces"; src: url("../fonts/fraunces-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 @font-face { font-family: "DM Sans"; src: url("../fonts/dm-sans-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -8,172 +8,176 @@
 
 :root {
   --paper: #F5F1E8; --ink: #1A1A1A; --accent: #D94F2B;
-  --accent-text: #B8401F;  /* darker accent for small text, so it passes 4.5:1 contrast on paper */
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "DM Sans", Arial, sans-serif;
-  --mono: "JetBrains Mono", "Courier New", monospace;
+  --accent-text: #B8401F;  /* darker accent for small text, passes 4.5:1 on paper */
+  --muted: #6B655B; --rule: #D8D2C4; --field: #FFFDF8;
+  --serif: "Fraunces", Georgia, serif; --sans: "DM Sans", Arial, sans-serif; --mono: "JetBrains Mono", "Courier New", monospace;
 }
 ::selection { background: var(--accent); color: var(--paper); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-body {
-  margin: 0; padding: 32px 16px; font-family: var(--sans); font-size: 16px; line-height: 1.5;
-  color: var(--ink); background-color: var(--paper);
+body { margin: 0; padding: 0 32px 32px; font-family: var(--sans); font-size: 16px; line-height: 1.5; color: var(--ink); background-color: var(--paper);
   /* faint paper grain: SVG noise drawn by the browser, no image file */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-}
-h1, h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -0.01em; }
-h1 { font-size: clamp(2.25rem, 4vw, 3.25rem); line-height: 1.05; letter-spacing: -0.02em; margin: 16px 0 16px; }
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); }
+h1, h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1; margin: 16px 0; }
 h2 { font-size: 1.5rem; }
-#wizard { max-width: 640px; }
-.progress { display: flex; align-items: center; gap: 16px; margin: 0; font-family: var(--mono); font-size: 0.875rem; letter-spacing: 0.05em; color: var(--accent-text); }
-/* thin bar after "03 / 12": ink track, accent fill */
-.progress progress { appearance: none; width: 160px; height: 2px; border: 0; background: #D8D2C4; }
-.progress progress::-webkit-progress-bar { background: #D8D2C4; }
+.help { margin-top: 0; max-width: 52ch; color: #3D3A35; font-size: 1.0625rem; }
+.field > label, .review dt, .preview-label { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* masthead: thick ink rule on top, name left, file tools right as quiet mono links */
+body > header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  margin: 0 -32px 32px; padding: 16px 32px; border-top: 6px solid var(--ink); border-bottom: 1px solid var(--ink); }
+body > header p { margin: 0; }
+.mark { vertical-align: -6px; margin-right: 10px; color: var(--ink); }
+#app-name { font-family: var(--serif); font-size: 1.625rem; margin-right: 12px; }
+#app-tagline { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.project-tools { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.project-tools button { padding: 4px 0; border: 0; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em;
+  text-decoration: underline 1px transparent; text-underline-offset: 4px; }
+.project-tools button:hover:not(:disabled) { background: none; color: var(--accent-text); text-decoration-color: currentColor; }
+#reset-btn { color: var(--accent-text); }
+body > header .error { flex-basis: 100%; }
+
+/* workspace: step index (fixed width) | form | proof */
+.builder { display: grid; grid-template-columns: 176px minmax(0, 6fr) minmax(0, 5fr); gap: 32px 48px; align-items: start; }
+.builder:has(.gallery) { grid-template-columns: 176px minmax(0, 1fr); }
+.builder:has(.gallery) .preview { display: none; }
+#wizard { max-width: 680px; }
+#wizard:has(.gallery) { max-width: none; }
+
+/* step index: mono list, finished steps are links back, current step has an accent bar */
+#rail { position: sticky; top: 32px; }
+.rail { margin: 0; padding: 0; list-style: none; counter-reset: step; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.rail li { counter-increment: step; display: flex; gap: 8px; padding: 6px 0 6px 12px; border-left: 2px solid var(--rule); }
+.rail li::before { content: counter(step, decimal-leading-zero); }
+.rail .done { color: var(--ink); }
+.rail .done button { padding: 0; border: 0; font: inherit; text-align: left; text-decoration: underline 1px var(--rule); text-underline-offset: 3px; }
+.rail .done button:hover { background: none; color: var(--accent-text); text-decoration-color: currentColor; }
+.rail .now { color: var(--accent-text); font-weight: 700; border-left-color: var(--accent); }
+
+/* progress: huge outlined numeral, then "03 / 12" in mono and a thin bar */
+.progress { display: flex; align-items: flex-end; gap: 16px; margin: 0; font-family: var(--mono); font-size: 0.8125rem; color: var(--accent-text); }
+.big-num { font-family: var(--serif); font-weight: 700; font-size: clamp(4.5rem, 8vw, 7rem); line-height: 0.8; letter-spacing: -0.04em;
+  color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+.count { padding-bottom: 4px; }
+.progress progress { appearance: none; flex: 0 1 160px; height: 2px; margin-bottom: 10px; border: 0; background: var(--rule); }
+.progress progress::-webkit-progress-bar { background: var(--rule); }
 .progress progress::-webkit-progress-value { background: var(--accent); transition: width 0.3s ease-out; }
 .progress progress::-moz-progress-bar { background: var(--accent); }
-.help { margin-top: 0; max-width: 52ch; }
 
-/* form fields */
-.field { margin-bottom: 16px; }
-.field > label { display: block; margin-bottom: 4px; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; }
-.option { display: block; padding: 4px 0; cursor: pointer; }
-input:not([type="radio"]):not([type="checkbox"]), textarea {
-  width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--ink); border-radius: 0;
-  background: #FFFDF8; color: var(--ink); font: inherit; transition: background-color 0.15s;
-}
+/* fields: big serif answers on a ruled line, like filling in a printed form */
+.field { margin-bottom: 32px; }
+.field > label { display: block; margin-bottom: 4px; }
+input:not([type="radio"]):not([type="checkbox"]), textarea { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--ink);
+  border-radius: 0; background: var(--field); color: var(--ink); font: inherit; transition: background-color 0.15s, border-color 0.15s; }
+.field > input:not([type]), .list-row input:not([type]) { padding: 8px 0; border-width: 0 0 1px; background: transparent;
+  font-family: var(--serif); font-size: 1.375rem; }
+.list-row input:not([type]) { font-size: 1.125rem; }
+textarea { min-height: 120px; resize: vertical; font-family: var(--serif); font-size: 1.125rem; line-height: 1.5; }
 input:not([type="radio"]):not([type="checkbox"]):hover, textarea:hover { background: #FFFFFF; }
-input:focus-visible, textarea:focus-visible { outline-offset: 0; }
-input[type="radio"], input[type="checkbox"] { accent-color: var(--ink); }
-textarea { min-height: 96px; resize: vertical; }
-.list-row { display: flex; align-items: start; gap: 8px; margin-bottom: 8px; }
-/* card rows with an image: title and detail on top, image picker and Remove below */
-.list-row:has(.upload) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; border: 1px solid var(--ink); }
-.list-row:has(.upload) .upload { grid-column: 1 / -1; }
-.list-row:has(.upload) > button { justify-self: start; }
-.has-error input, .has-error textarea { border: 2px solid var(--accent); }
+.field > input:not([type]):hover, .list-row input:not([type]):hover { background: transparent; border-color: var(--accent-text); }
+.field > input:not([type]):focus-visible, .list-row input:not([type]):focus-visible { outline: 0; border-bottom: 2px solid var(--accent); margin-bottom: -1px; }
+::placeholder { color: #8A8478; font-style: italic; }
+.has-error input, .has-error textarea { border-color: var(--accent); border-bottom-width: 2px; }
 .error { margin: 4px 0 0; color: var(--accent-text); font-size: 0.875rem; }
+.list-row { display: flex; align-items: end; gap: 16px; margin-bottom: 8px; }
+/* card rows with an image: title and detail on top, image picker below, Remove in the corner */
+.list-row:has(.upload) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 16px; padding: 16px; border: 1px solid var(--ink); background: var(--field); }
+.list-row:has(.upload) .upload { grid-column: 1 / -1; }
+.list-row:has(.upload) > button { justify-self: end; grid-column: 1 / -1; padding: 4px 0; border: 0; font-family: var(--mono); font-size: 0.75rem;
+  text-decoration: underline; text-underline-offset: 3px; }
+.list-row:has(.upload) > button:hover:not(:disabled) { background: transparent; color: var(--accent-text); }
+
+/* multiple choice (site type, theme, font) as tiles */
+.field:has(> .option) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.field:has(> .option) > :not(.option) { grid-column: 1 / -1; }
+.field > .option { position: relative; display: flex; align-items: center; gap: 12px; margin: 0; padding: 16px; border: 1px solid var(--ink);
+  background: var(--field); font-family: var(--sans); font-size: 1rem; letter-spacing: 0; text-transform: capitalize; cursor: pointer;
+  transition: background-color 0.15s, color 0.15s; }
+.field > .option:hover { background: #FFFFFF; }
+.field > .option input { position: absolute; opacity: 0; }  /* still focusable and read by screen readers */
+.field > .option:has(input:checked) { background: var(--ink); color: var(--paper); }
+.field > .option:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.option { display: block; padding: 4px 0; cursor: pointer; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--ink); }
+.option-extra { display: flex; gap: 2px; font-size: 1.25rem; line-height: 1; }
+.option-extra:empty { display: none; }
+.swatch { width: 12px; height: 24px; border: 1px solid currentColor; }
 
 /* buttons: hover, focus, pressed and disabled all look different */
-.nav { display: flex; gap: 8px; margin-top: 32px; }
 button { padding: 8px 16px; border: 1px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer;
   transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
 button:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
 button:active:not(:disabled) { transform: translateY(1px); }
 button.primary { background: var(--ink); color: var(--paper); }
-.nav button { min-height: 48px; padding: 8px 24px; }
-.nav .primary::after { content: "  \2192"; }  /* arrow after Next */
 button.primary:hover:not(:disabled) { background: var(--accent-text); border-color: var(--accent-text); }
 button:disabled { opacity: 0.4; cursor: not-allowed; }
+.nav { display: flex; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--ink); }
+.nav button { min-height: 48px; padding: 8px 24px; }
+.nav .primary { margin-left: auto; min-width: 160px; }
+.nav .primary::after { content: "  \2192"; }
 
-/* review: a ruled two-column table, label left, answer right */
+/* review: a ruled two-column table */
 .review { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); margin: 0; border-top: 1px solid var(--ink); }
-.review dt, .review dd { margin: 0; padding: 8px 0; border-bottom: 1px solid #D8D2C4; }
-.review dt { font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 10px; }
-
-/* builder: wizard left (7), live preview right (5) */
-/* minmax(0, ...) stops the 1280px preview frame from stretching its column */
-.builder { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; align-items: start; }
-.preview { position: sticky; top: 16px; display: flex; flex-direction: column; height: calc(100vh - 180px); }
-.preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
-.preview-label { font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; }
-#preview-devices { display: flex; gap: 4px; }
-/* hard offset shadow, like a printed proof on the desk (no soft blur) */
-#preview-stage { flex: 1; overflow: hidden; border: 1px solid #1A1A1A; background: #FFFFFF; box-shadow: 8px 8px 0 var(--ink); }
-#preview-frame { display: block; border: 0; transform-origin: 0 0; }
-/* the gallery already shows previews, so it gets the full width */
-.builder:has(.gallery) { grid-template-columns: minmax(0, 1fr); }
-.builder:has(.gallery) .preview { display: none; }
-@media (max-width: 900px) {
-  .builder { grid-template-columns: minmax(0, 1fr); }
-  .preview { position: static; height: 70vh; }
-}
-
-/* header: app name and project file buttons */
-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
-  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
-header p { margin: 0; }
-.mark { vertical-align: -6px; margin-right: 10px; color: var(--ink); }
-#app-name { font-family: var(--serif); font-size: 1.5rem; margin-right: 8px; }
-#app-tagline { font-family: var(--mono); font-size: 0.8125rem; }
-body > footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--ink); font-family: var(--mono); font-size: 0.8125rem; }
-header .error { flex-basis: 100%; }
-.project-tools { display: flex; flex-wrap: wrap; gap: 8px; }
-
-/* logo upload (step 11) */
-.upload { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.upload-preview { max-height: 64px; max-width: 200px; border: 1px solid #1A1A1A; background: #FFFFFF; }
-.upload .error { flex-basis: 100%; }
-/* the browser's own "Choose file" button, restyled to match our buttons */
-input[type="file"] { padding: 4px; font-size: 0.875rem; cursor: pointer; }
-input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--ink); border-radius: 0;
-  background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
-input[type="file"]:hover::file-selector-button { background: var(--ink); color: var(--paper); }
-/* "Remove card" is a quiet text button in the card's corner, so it is not mistaken for a main action */
-.list-row:has(.upload) > button { justify-self: end; grid-column: 1 / -1; padding: 4px 0; border: 0;
-  font-family: var(--mono); font-size: 0.8125rem; text-decoration: underline; text-underline-offset: 3px; }
-.list-row:has(.upload) > button:hover:not(:disabled) { background: transparent; color: var(--accent-text); }
-
-/* accessibility check (step 12) */
-.checks { margin-top: 32px; padding: 16px; border: 1px solid #1A1A1A; }
+.review dt, .review dd { margin: 0; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.review dt { padding-top: 10px; }
+.checks { margin-top: 32px; padding: 16px; border: 1px solid var(--ink); }
 .checks h2 { margin: 0 0 8px; }
 .checks ul { margin: 8px 0 0; padding-left: 20px; }
 .checks-ok { margin: 0; font-family: var(--mono); }
-
-/* download buttons (step 12) */
-.export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid #1A1A1A; }
+.export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--ink); }
 .export h2, .export p { flex-basis: 100%; margin: 0; }
 
+/* proof: ink bar with the file name, then the page with a hard offset shadow (no soft blur) */
+.preview { position: sticky; top: 32px; display: flex; flex-direction: column; height: calc(100vh - 160px); }
+.preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 16px; }
+#preview-devices { display: flex; }
+#preview-devices button { margin-left: -1px; padding: 6px 14px; font-size: 0.875rem; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.proof-bar { display: flex; justify-content: space-between; gap: 8px; margin: 0; padding: 8px 12px; background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 0.75rem; }
+#preview-stage { position: relative; flex: 1; overflow: hidden; border: 1px solid var(--ink); border-top: 0; background: #FFFFFF; box-shadow: 8px 8px 0 var(--ink); }
+#preview-frame { display: block; border: 0; transform-origin: 0 0; }
+#preview-stage.empty::after { content: "Your site shows up here.\A Start with a name on the left."; white-space: pre-line; position: absolute; inset: 0;
+  padding: 32px; background: var(--paper); font-family: var(--serif); font-size: 1.5rem; line-height: 1.3; }
+
+/* image pickers */
+.upload { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.upload-preview { max-height: 64px; max-width: 200px; border: 1px solid var(--ink); background: #FFFFFF; }
+.upload .error { flex-basis: 100%; }
+.upload input[type="file"] { padding: 8px; border-style: dashed; background: transparent; font-size: 0.875rem; cursor: pointer; }
+input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--ink); border-radius: 0;
+  background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+input[type="file"]:hover::file-selector-button { background: var(--ink); color: var(--paper); }
+
 /* template gallery (step 3) */
-#wizard:has(.gallery) { max-width: 1040px; }
 .gallery-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
 .gallery-tools input[type="search"] { width: auto; flex: 1 1 160px; }
-.chip[aria-pressed="true"] { background: #1A1A1A; color: #F5F1E8; }
 .gallery-count { font-family: var(--mono); margin: 0 0 0 auto; }
-.gallery-empty { padding: 16px; border: 1px dashed #1A1A1A; }
+.gallery-empty { padding: 16px; border: 1px dashed var(--ink); }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, 200px); gap: 16px; }
-.tile { position: relative; display: block; cursor: pointer; border: 1px solid #1A1A1A; background: #FFFFFF; }
+.tile { position: relative; display: block; cursor: pointer; border: 1px solid var(--ink); background: #FFFFFF; transition: box-shadow 0.15s; }
 .tile[hidden] { display: none; }
 .tile input { position: absolute; opacity: 0; }
-.thumb { display: block; width: 200px; height: 150px; overflow: hidden; border-bottom: 1px solid #1A1A1A; }
+.thumb { display: block; width: 200px; height: 150px; overflow: hidden; border-bottom: 1px solid var(--ink); }
 /* page drawn at 1000x750, shrunk to 20%; clicks pass through to the tile */
 .thumb iframe { width: 1000px; height: 750px; border: 0; transform: scale(0.2); transform-origin: 0 0; pointer-events: none; }
 .tile-name { display: block; padding: 8px; font-family: var(--mono); font-size: 13px; }
-.tile:hover { outline: 1px solid #1A1A1A; }
-.tile:has(input:checked) { outline: 3px solid #D94F2B; outline-offset: -1px; }
-.tile:has(input:checked) .tile-name { background: #1A1A1A; color: #F5F1E8; }
-.tile:has(input:focus-visible) { outline: 3px solid #1A1A1A; outline-offset: 2px; }
+.tile:hover { box-shadow: 4px 4px 0 var(--ink); }
+.tile:has(input:checked) { outline: 3px solid var(--accent); outline-offset: -1px; }
+.tile:has(input:checked) .tile-name { background: var(--ink); color: var(--paper); }
+.tile:has(input:focus-visible) { outline: 3px solid var(--ink); outline-offset: 2px; }
 
-/* all 12 steps under the form, in two columns like a contents page */
-.rail { margin: 32px 0 0; padding: 16px 0 0; border-top: 1px solid var(--ink); list-style: decimal-leading-zero inside;
-  columns: 2; column-gap: 32px; font-family: var(--mono); font-size: 0.8125rem; color: #6B655B; }
-.rail li { padding: 4px 0; break-inside: avoid; }
-.rail li::marker { color: #6B655B; }
-.rail .done { color: var(--ink); }
-.rail .done { text-decoration: line-through; text-decoration-thickness: 1px; }
-.rail .now { color: var(--accent-text); font-weight: 700; }
-.rail .now::marker { color: var(--accent-text); }
-@media (max-width: 900px) { .rail { display: none; } }  /* on phones "05 / 12" is enough; the preview comes first */
+body > footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--ink); font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
 
-/* preview before the site has a name: a short note instead of a blank white page */
-#preview-stage { position: relative; }
-#preview-stage.empty::after { content: "Your site shows up here.\A Start with a name on the left."; white-space: pre-line;
-  position: absolute; inset: 0; padding: 32px; background: var(--paper); font-family: var(--serif); font-size: 1.5rem; line-height: 1.3; }
-
-/* header file tools: smaller and quieter than the step buttons, so Next stays the main action */
-.project-tools button { padding: 4px 12px; font-family: var(--mono); font-size: 0.8125rem; }
-#redo-btn { margin-right: 16px; }
-
-/* multiple choice (site type, theme, font) as tiles instead of a plain radio list */
-.field:has(> .option) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
-.field:has(> .option) > :not(.option) { grid-column: 1 / -1; }
-.field > .option { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--ink);
-  margin: 0; background: #FFFDF8; font-family: var(--sans); font-size: 1rem; letter-spacing: 0; text-transform: capitalize;
-  cursor: pointer; transition: background-color 0.15s, color 0.15s; }
-.field > .option:hover { background: #FFFFFF; }
-.field > .option input { position: absolute; opacity: 0; }  /* still focusable and read by screen readers */
-.field > .option:has(input:checked) { background: var(--ink); color: var(--paper); }
-.field > .option:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
-.option-extra { display: flex; gap: 2px; font-size: 1.25rem; line-height: 1; }
-.option-extra:empty { display: none; }
-.swatch { width: 12px; height: 24px; border: 1px solid currentColor; }
+/* narrower screens: drop the step index first, then stack the form above the proof */
+@media (max-width: 1200px) {
+  .builder { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .builder:has(.gallery) { grid-template-columns: minmax(0, 1fr); }
+  #rail { display: none; }
+}
+@media (max-width: 900px) {
+  body { padding: 0 16px 32px; }
+  body > header { margin: 0 -16px 32px; padding: 16px; }
+  .builder { grid-template-columns: minmax(0, 1fr); }
+  .preview { position: static; height: 70vh; }
+}
