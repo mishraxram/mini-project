@@ -6,6 +6,8 @@ Mini project, B.Tech. Plain HTML, CSS and JavaScript. No framework, no AI, no AP
 
 **Live:** https://mishraxram.github.io/mini-project/
 
+![WebCraft builder: the form on the left, live preview on the right](docs/builder.png)
+
 ## How it works
 
 ```
@@ -40,7 +42,7 @@ answers (form)  ->  state object  ->  layout(state, theme)  ->  HTML string  -> 
 - Undo / redo (Ctrl+Z, Ctrl+Y)
 - Image upload: PNG, JPG, SVG or WebP; photos are shrunk in the browser to stay under 500 KB
 - Accessibility check before download: missing alt text, low contrast, empty links, missing description
-- Generated sites have a sticky header, a WhatsApp / mail link and Open Graph tags
+- Generated sites have a sticky header, a mobile menu, a dark mode button, a WhatsApp / mail link and Open Graph tags
 
 ## Run it
 
