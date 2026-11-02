@@ -77,3 +77,7 @@
 ## Polish before GitHub
 - What: the Choose file button matches the other buttons; Remove card is a small text link in the card corner; README.md explains the project.
 - Why: the browser's grey file button broke the paper look, and a big Remove button sat next to Add card and was easy to hit by mistake.
+
+## Responsive menu
+- What: on screens under 600px every generated site hides its menu behind a "Menu" button (aria-expanded, closes after a link is picked); the live preview frame now runs scripts (sandbox="allow-scripts", no same-origin) so it works there too.
+- Why: six menu links do not fit a phone header; the script is fixed text with no user input, and without JavaScript the menu just stays open.

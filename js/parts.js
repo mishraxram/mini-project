@@ -149,8 +149,34 @@ section { scroll-margin-top: 5rem; }
 .wa { position: fixed; right: 16px; bottom: 16px; z-index: 2; background: var(--accent); color: var(--on-accent);
   padding: 10px 16px; border-radius: min(var(--r), 24px); text-decoration: none; font-weight: bold; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* small screens: the menu hides behind a "Menu" button (the button is added by MENU_SCRIPT) */
+.menu-btn { display: none; font: inherit; font-size: 0.875rem; background: none; color: var(--text); cursor: pointer;
+  border: 1px solid var(--line); border-radius: min(var(--r), 8px); padding: 4px 12px; }
+@media (max-width: 600px) {
+  .menu-btn { display: inline-block; }
+  .menu-btn + nav { display: none; flex-basis: 100%; }
+  .menu-btn + nav.open { display: block; }
+  .menu-btn + nav a { display: block; margin: 0; padding: 8px 0; }
+}
 ${css}
 </style></head>
-<body>${body}${whatsappHTML(state)}</body></html>`;
+<body>${body}${whatsappHTML(state)}${MENU_SCRIPT}</body></html>`;
 }
+
+// Fixed script (no user text inside). Without JavaScript the menu simply stays open.
+const MENU_SCRIPT = `<script>
+const menu = document.querySelector("header nav, aside nav");
+if (menu && menu.children.length) {
+  const button = document.createElement("button");
+  button.className = "menu-btn";
+  button.textContent = "Menu";
+  button.setAttribute("aria-expanded", "false");
+  menu.id = "site-menu";
+  button.setAttribute("aria-controls", "site-menu");
+  menu.before(button);
+  const setOpen = open => { menu.classList.toggle("open", open); button.setAttribute("aria-expanded", open); };
+  button.onclick = () => setOpen(!menu.classList.contains("open"));
+  menu.onclick = event => { if (event.target.closest("a")) setOpen(false); };
+}
+</script>`;
 

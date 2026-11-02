@@ -51,3 +51,5 @@
 | 47 | Card image with `" onerror=` in an imported file | Not put in the site | Dropped | Pass |
 | 48 | Generated site fonts (internet off) | Headings use Fraunces or DM Sans from inside the HTML file | document.fonts in the site: DM Sans 400/700 (Night), Fraunces (Classic/Magazine) loaded; no network URLs | Pass |
 | 49 | All 50 templates after the design pass | No overflow at 1280 / 375px; impeccable detector clean | 0 overflow; detector: [] | Pass |
+| 50 | Mobile menu, each layout at 375px | Menu hidden, "Menu" button shows; click opens it; clicking a link closes it | All 5 layouts: hidden, opens (aria-expanded true), closes on link; no overflow | Pass |
+| 51 | Mobile menu at 1280px | No button, menu always visible | All 5 layouts: no button, menu shown | Pass |
