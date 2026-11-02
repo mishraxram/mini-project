@@ -4,7 +4,7 @@ const DEVICES = [
   { name: "Tablet", width: 768 },
   { name: "Mobile", width: 375 }
 ];
-let device = DEVICES[0];
+let device = innerWidth < 760 ? DEVICES[2] : DEVICES[0];  // phones start on the Mobile view
 let previewTimer = null;
 let lastPreview = "";
 

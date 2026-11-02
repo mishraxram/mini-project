@@ -145,9 +145,9 @@ function renderReview() {
     inputsOf(step).forEach(input => {
       let value = getValue(input.field);
       if (input.image && value) value = "Image added";  // not the long base64 text
-      if (input.type === "mcq") value = ([...TEMPLATES, ...THEMES].find(t => t.id === value) || {}).name || value;
+      if (input.type === "mcq") value = displayName(value);
       if (Array.isArray(value)) value = value.map(v => typeof v === "object" ? v.title + " - " + v.detail : v).join(", ");
-      list.append(el("dt", "", input.label), el("dd", "", value || "(empty)"));
+      list.append(el("dt", "", input.label), el("dd", value ? "" : "empty", value || "(empty)"));
     });
   });
   return list;

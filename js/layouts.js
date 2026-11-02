@@ -29,7 +29,9 @@ h2 { font-size: 1.75rem; margin-bottom: calc(var(--s) * 1.5); }
 .cards h3 { font-size: 1.25rem; margin-bottom: calc(var(--s) * 0.5); }
 .contact { line-height: 2; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
-  padding: calc(var(--s) * 2); border-top: 1px solid var(--line); color: var(--muted); }
+  width: min(100% - var(--s) * 4, 68rem - var(--s) * 4); margin: 0 auto; padding: calc(var(--s) * 2) 0;
+  border-top: 1px solid var(--line); color: var(--muted); }  /* same width as the content above */
+#contact h2 { font-family: var(--body); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
 .social a { margin-left: var(--s); }
 @media (max-width: 760px) {
   .hero:has(.hero-img) { grid-template-columns: minmax(0, 1fr); }
@@ -60,7 +62,8 @@ h2 { font-family: var(--body); font-size: 0.8125rem; text-transform: uppercase; 
 .cards h3 { font-size: 1rem; }
 .cards li:has(.card-img) { grid-template-columns: 8rem 1fr; }
 .cards .card-img { grid-row: span 2; aspect-ratio: 1; margin: 0; }
-footer { grid-column: 1 / -1; padding: var(--s) calc(var(--s) * 2); border-top: 1px solid var(--line);
+footer { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s);
+  padding: var(--s) calc(var(--s) * 2); border-top: 1px solid var(--line);
   font-size: 0.875rem; color: var(--muted); }
 .social a { margin-right: var(--s); }
 @media (max-width: 700px) {
@@ -113,7 +116,7 @@ main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap:
 .hero:has(+ .strip) { border-bottom: 0; }  /* the strip draws its own line */
 .hero h1 { grid-row: span 2; font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.1; }
 .hero p { color: var(--muted); }
-.hero .btn { justify-self: start; }
+.hero .btn { grid-column: 1; justify-self: start; }  /* under the headline, never alone on the right */
 .hero .hero-img { grid-column: 1 / -1; margin: 0; aspect-ratio: 21 / 9; }
 .strip { grid-row: 2; }
 .work { grid-column: 1; grid-row: 2 / span 2; }
@@ -126,8 +129,9 @@ h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-
 .cards li:has(.card-img) { display: grid; grid-template-columns: 6rem 1fr; column-gap: calc(var(--s) * 1.5); }
 .cards li .card-img { grid-row: span 2; aspect-ratio: 1; margin: 0; }
 .cards h3 { font-size: 1.0625rem; }
-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s); max-width: 72rem; margin: 0 auto;
-  padding: calc(var(--s) * 2); border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
+  width: min(100% - var(--s) * 4, 72rem - var(--s) * 4); margin: 0 auto; padding: calc(var(--s) * 2) 0;
+  border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
 .social a { margin-left: var(--s); }
 @media (max-width: 760px) {
   main, .hero { grid-template-columns: minmax(0, 1fr); }

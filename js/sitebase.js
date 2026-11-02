@@ -69,14 +69,16 @@ html { scroll-padding-top: 5rem; }  /* a focused link is never hidden under the 
   letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--accent); user-select: none; }
 
 /* moving strip of card titles under the hero */
-.strip { position: relative; overflow: hidden; border-block: 1px solid var(--line); padding: calc(var(--s) * 0.75) 0;
+.strip { position: relative; overflow-x: clip;  /* clip only sideways, so the Pause button on the top line is not cut */
+  border-block: 1px solid var(--line); padding: calc(var(--s) * 0.75) 0;
   margin-bottom: calc(var(--s) * 2); grid-column: 1 / -1; }
 .strip-track { display: flex; width: max-content; font-family: var(--head); font-size: clamp(1.25rem, 3vw, 2rem); white-space: nowrap; }
 .strip-track span { padding-right: 1.5em; }
 .strip-track span::after { content: "/"; padding-left: 1.5em; color: var(--accent); }
 .strip:hover .strip-track, .strip.paused .strip-track { animation-play-state: paused; }
 /* Pause button for the strip (added by REVEAL_SCRIPT only when the strip moves) */
-.strip-btn { position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 4px 10px; font: inherit; font-size: 0.75rem;
+.strip-btn { position: absolute; right: 0; top: 0; transform: translateY(-50%);  /* sits on the top line, not on the words */
+  padding: 4px 10px; font: inherit; font-size: 0.75rem;
   cursor: pointer; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: min(var(--r), 8px); }
 
 /* contact: one big closing line before the details */

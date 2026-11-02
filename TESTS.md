@@ -80,3 +80,8 @@
 | 76 | Review step | Shows template name, not its id | "Classic / Rust" | Pass |
 | 77 | Theme personality on all 50 templates | Themes change button style (solid / outline / underline) and heading case, not only colors; no overflow; a11y clean | Every layout shows both filled and transparent buttons across themes; 0 overflow at 375 / 1280; a11y clean | Pass |
 | 78 | Gallery at 1440px | Tiles fill the row edge to edge | justify-content: space-between, no gap on the right | Pass |
+| 79 | Theme radius and fonts (Section 8) | Every theme radius is 0 or 4; every font is embedded (no system Palatino / Verdana / Times) | radius 0/4 only; bodies use Fraunces or DM Sans; site still ~63 KB | Pass |
+| 80 | Footer alignment (Classic, Split) at 1280px | Footer starts where the content starts | Classic 120 = 120, Split 88 = 88 | Pass |
+| 81 | Split hero without image or subtext | Button sits under the headline | grid-column 1 | Pass |
+| 82 | Review step | Type and template shown by name; unset theme/font say "From template"; empty answers in muted mono | "Restaurant", "Classic / Rust", "From template", class empty | Pass |
+| 83 | Builder opened on a phone | Preview starts on Mobile | device = Mobile below 760px | Pass |

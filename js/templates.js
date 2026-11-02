@@ -31,3 +31,11 @@ function buildSite(state) {
   const layout = LAYOUTS.find(l => l.id === siteTemplate(state).layoutId);
   return layout.build(state, siteTheme(state));
 }
+
+// Name for the review step: "classic-rust" -> "Classic / Rust", "paper" -> "Paper",
+// "restaurant" -> "Restaurant", "" (theme or font not picked) -> "From template"
+function displayName(value) {
+  if (!value) return "From template";
+  const found = [...TEMPLATES, ...THEMES].find(t => t.id === value);
+  return found ? found.name : value[0].toUpperCase() + value.slice(1);
+}

@@ -113,3 +113,7 @@
 ## Theme personality
 - What: each theme now has button ("solid", "outline" or "underline") and caps (spaced capital section headings) in themes.js; page() puts them as classes on <html> and sitebase.js styles them.
 - Why: before, two templates of the same layout differed only in color, so the 50 thumbnails looked alike; it is still data only, so a new theme is still one object.
+
+## Second review round
+- What: all theme radii are 0 or 4 and every body font is an embedded one; footers line up with the content; Split's button sits under the headline; Classic's Contact heading is a small label above the big line; sidebar footer spaced out; Pause sits on the strip's top line; review shows names, "From template" and muted empty rows; phones start the preview on Mobile.
+- Why: the design reviewer re-scored the UI (builder 8, templates 7) and listed these as the remaining gaps.
