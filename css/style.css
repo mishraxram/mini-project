@@ -93,6 +93,15 @@ header .error { flex-basis: 100%; }
 .upload { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .upload-preview { max-height: 64px; max-width: 200px; border: 1px solid #1A1A1A; background: #FFFFFF; }
 .upload .error { flex-basis: 100%; }
+/* the browser's own "Choose file" button, restyled to match our buttons */
+input[type="file"] { padding: 4px; font-size: 0.875rem; cursor: pointer; }
+input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--ink); border-radius: 0;
+  background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+input[type="file"]:hover::file-selector-button { background: var(--ink); color: var(--paper); }
+/* "Remove card" is a quiet text button in the card's corner, so it is not mistaken for a main action */
+.list-row:has(.upload) > button { justify-self: end; grid-column: 1 / -1; padding: 4px 0; border: 0;
+  font-family: var(--mono); font-size: 0.8125rem; text-decoration: underline; text-underline-offset: 3px; }
+.list-row:has(.upload) > button:hover:not(:disabled) { background: transparent; color: var(--accent-text); }
 
 /* accessibility check (step 12) */
 .checks { margin-top: 32px; padding: 16px; border: 1px solid #1A1A1A; }

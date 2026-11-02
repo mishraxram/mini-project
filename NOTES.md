@@ -73,3 +73,7 @@
 ## Design pass on generated sites (impeccable plugin)
 - What: headings use real embedded fonts (Fraunces / DM Sans as base64 via fontdata.js), themed selection, focus ring and link underlines, no meaningless 01/02 numbers, classic cards as ruled columns; WebCraft gets an SVG mark and favicon.
 - Why: system-font headings and boxed cards made every site look generic; the fonts travel inside the one HTML file, so sites still work offline.
+
+## Polish before GitHub
+- What: the Choose file button matches the other buttons; Remove card is a small text link in the card corner; README.md explains the project.
+- Why: the browser's grey file button broke the paper look, and a big Remove button sat next to Add card and was easy to hit by mistake.

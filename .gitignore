@@ -1,3 +1,18 @@
 node_modules
 .impeccable/hook.cache.json
 sites/
+# editor and machine files, not part of the project
+.idea/
+.vscode/
+.mcp.json
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.gitmodules
+.ripgreprc
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
