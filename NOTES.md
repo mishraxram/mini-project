@@ -81,3 +81,7 @@
 ## Responsive menu
 - What: on screens under 600px every generated site hides its menu behind a "Menu" button (aria-expanded, closes after a link is picked); the live preview frame now runs scripts (sandbox="allow-scripts", no same-origin) so it works there too.
 - Why: six menu links do not fit a phone header; the script is fixed text with no user input, and without JavaScript the menu just stays open.
+
+## Dark mode button
+- What: every generated site has a small fixed button (bottom left) that swaps a light theme to Ink colors, or a dark theme (dark: true in themes.js) to Paper colors, and remembers the choice per page in localStorage.
+- Why: all layout colors are CSS variables, so one extra class on <html> swaps the whole palette; Ink and Paper already pass the contrast check.

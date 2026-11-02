@@ -53,3 +53,6 @@
 | 49 | All 50 templates after the design pass | No overflow at 1280 / 375px; impeccable detector clean | 0 overflow; detector: [] | Pass |
 | 50 | Mobile menu, each layout at 375px | Menu hidden, "Menu" button shows; click opens it; clicking a link closes it | All 5 layouts: hidden, opens (aria-expanded true), closes on link; no overflow | Pass |
 | 51 | Mobile menu at 1280px | No button, menu always visible | All 5 layouts: no button, menu shown | Pass |
+| 52 | Dark mode button, light theme (Paper, Harbor) in all 5 layouts | Click turns the site dark (Ink colors), aria-pressed true | Background #F5F1E8 / #EEF2F5 to #1A1A1A, pressed true | Pass |
+| 53 | Mode button on a dark theme (Ink, Night) | Says "Light mode", click gives Paper colors | Night #10161C to #F5F1E8 | Pass |
+| 54 | Refresh after picking dark mode | Choice remembered for that page only | Still dark after reload; key is per page path | Pass |

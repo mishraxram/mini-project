@@ -1,5 +1,6 @@
 // 10 themes. A theme is data only: colors, fonts, corner radius, spacing.
 // radius = corner size in px (999 = pill buttons). spacing = base unit in px, layouts multiply it.
+// dark: true marks a dark theme, so the site's mode button offers a light look instead.
 // Headings always use a real font that ships inside the site (see fontdata.js).
 // Body text can use a font already on every computer.
 const FRAUNCES = '"Fraunces", Georgia, serif';
@@ -21,7 +22,7 @@ const THEMES = [
   { id: "paper", name: "Paper", headingFont: FRAUNCES, bodyFont: DMSANS, radius: 0, spacing: 16,
     colors: { bg: "#F5F1E8", text: "#1A1A1A", muted: "#5C574F", accent: "#B8401F", onAccent: "#FFFFFF", line: "#1A1A1A" } },
 
-  { id: "ink", name: "Ink", headingFont: DMSANS, bodyFont: DMSANS, radius: 0, spacing: 16,
+  { id: "ink", name: "Ink", dark: true, headingFont: DMSANS, bodyFont: DMSANS, radius: 0, spacing: 16,
     colors: { bg: "#1A1A1A", text: "#F5F1E8", muted: "#B5AFA4", accent: "#F0A35E", onAccent: "#1A1A1A", line: "#3A3A3A" } },
 
   { id: "rust", name: "Rust", headingFont: FRAUNCES, bodyFont: PALATINO, radius: 4, spacing: 16,
@@ -45,6 +46,6 @@ const THEMES = [
   { id: "mustard", name: "Mustard", headingFont: DMSANS, bodyFont: SERIF, radius: 4, spacing: 16,
     colors: { bg: "#FFF8E7", text: "#222222", muted: "#5E5646", accent: "#7A5200", onAccent: "#FFFFFF", line: "#E5D9B8" } },
 
-  { id: "night", name: "Night", headingFont: DMSANS, bodyFont: DMSANS, radius: 8, spacing: 16,
+  { id: "night", name: "Night", dark: true, headingFont: DMSANS, bodyFont: DMSANS, radius: 8, spacing: 16,
     colors: { bg: "#10161C", text: "#DDE3E8", muted: "#93A1AD", accent: "#4FB3A9", onAccent: "#10161C", line: "#2A343D" } }
 ];

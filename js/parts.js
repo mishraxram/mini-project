@@ -105,8 +105,15 @@ function whatsappHTML(state) {
   return number ? `<a class="wa" href="https://wa.me/${number}">WhatsApp</a>` : "";
 }
 
+// CSS variables for one set of theme colors
+function colorVars(c) {
+  return `--bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent}; --line: ${c.line};`;
+}
+
 function page(state, theme, css, body) {
   const c = theme.colors;
+  // The mode button swaps a light theme to Ink colors and a dark theme to Paper colors
+  const other = THEMES.find(t => t.id === (theme.dark ? "paper" : "ink")).colors;
   const title = escapeHTML(state.seo.title || state.siteName || "My site");
   const description = escapeHTML(state.seo.description);
   return `<!doctype html>
@@ -120,8 +127,9 @@ function page(state, theme, css, body) {
 <meta name="theme-color" content="${c.bg}">
 <style>
 ${fontFaceCSS(theme)}
-:root { --bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent};
-  --line: ${c.line}; --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
+:root { ${colorVars(c)}
+  --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
+html.other-mode { ${colorVars(other)} }
 * { box-sizing: border-box; margin: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-wrap: anywhere; }
 h1, h2, h3, header strong, aside strong { font-family: var(--head); }
@@ -158,10 +166,28 @@ section { scroll-margin-top: 5rem; }
   .menu-btn + nav.open { display: block; }
   .menu-btn + nav a { display: block; margin: 0; padding: 8px 0; }
 }
+.mode-btn { position: fixed; left: 16px; bottom: 16px; z-index: 2; font: inherit; font-size: 0.875rem; cursor: pointer;
+  background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: min(var(--r), 24px); padding: 8px 14px; }
 ${css}
 </style></head>
-<body>${body}${whatsappHTML(state)}${MENU_SCRIPT}</body></html>`;
+<body>${body}${whatsappHTML(state)}
+<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button>
+${MENU_SCRIPT}${MODE_SCRIPT}</body></html>`;
 }
+
+// Fixed script: the mode button switches colors and remembers the choice in this browser.
+// The key includes the page path, so two published sites do not share one choice.
+// try/catch because some browsers block storage for files opened from disk.
+const MODE_SCRIPT = `<script>
+const modeButton = document.querySelector(".mode-btn");
+const setMode = on => { document.documentElement.classList.toggle("other-mode", on); modeButton.setAttribute("aria-pressed", on); };
+try { setMode(localStorage.getItem("site-mode:" + location.pathname) === "other"); } catch (e) {}
+modeButton.onclick = () => {
+  const on = !document.documentElement.classList.contains("other-mode");
+  setMode(on);
+  try { localStorage.setItem("site-mode:" + location.pathname, on ? "other" : "normal"); } catch (e) {}
+};
+</script>`;
 
 // Fixed script (no user text inside). Without JavaScript the menu simply stays open.
 const MENU_SCRIPT = `<script>
